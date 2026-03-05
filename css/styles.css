@@ -1,0 +1,53 @@
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #fcfcfc; color: #333; }
+.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+.site-header { background: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.05); padding: 1.5rem 0; width: 100%; top: 0; position: sticky; z-index: 1000; }
+.site-header .container { display: flex; justify-content: space-between; align-items: center; }
+.brand-logo { font-weight: 700; font-size: 1.25rem; text-decoration: none; color: #111; }
+.main-nav ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1.5rem; }
+.main-nav a { text-decoration: none; color: #555; font-weight: 500; transition: color 0.2s; }
+.main-nav a:hover { color: #000; }
+.hero-section { padding: 5rem 0; text-align: center; }
+.hero-title { font-size: 2.8rem; margin-bottom: 1rem; color: #222; font-weight: 800; }
+.hero-subtitle { font-size: 1.25rem; color: #666; max-width: 700px; margin: 0 auto 2rem; }
+.btn { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: background-color 0.2s, color 0.2s; cursor: pointer; border: 1px solid transparent; }
+.btn-primary { background-color: #006aff; color: #fff; }
+.btn-primary:hover { background-color: #005ce6; }
+.btn-secondary { background-color: #fff; color: #006aff; border-color: #006aff; }
+.btn-secondary:hover { background-color: #f0f7ff; }
+.text-center { text-align: center; }
+.grid { display: grid; gap: 2rem; }
+.cards-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); padding: 2rem 0; }
+.card { background: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; }
+.card-content { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
+.card-content h3 { margin-top: 0; font-size: 1.5rem; color: #111; }
+.card-content p { color: #555; flex-grow: 1; margin-bottom: 1.5rem; }
+.bg-light { background-color: #f7f9fa; padding: 4rem 0; }
+.section-title { font-size: 2rem; margin-bottom: 2rem; color: #222; }
+.placeholder-card { opacity: 0.6; pointer-events: none; }
+.badge { font-size: 0.8rem; background: #eee; padding: 0.2rem 0.6rem; border-radius: 12px; vertical-align: middle; margin-left: 0.5rem; color: #555; }
+.value-prop-section { padding: 5rem 0; background: #fff; }
+.site-footer { background: #111; color: #999; padding: 3rem 0; }
+.footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
+.footer-links ul { list-style: none; padding: 0; margin: 0; display: flex; gap: 1rem; flex-wrap: wrap; }
+.footer-links a { color: #ccc; text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: #fff; }
+form {  display: flex; flex-direction: column; gap: 1.5rem; max-width: 600px; margin: 0 auto; }
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; text-align: left; }
+.form-group label { font-weight: 600; color: #333; }
+.form-group input, .form-group textarea { padding: 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+.form-group input:focus, .form-group textarea:focus { border-color: #006aff; outline: none; box-shadow: 0 0 0 3px rgba(0, 106, 255, 0.1); }
+dl { background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+dt { font-weight: 700; margin-top: 1.5rem; font-size: 1.2rem; }
+dt:first-child { margin-top: 0; }
+dd { margin: 0.5rem 0 0 0; color: #555; }
+table.comparison-table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin-top: 2rem; }
+.comparison-table th, .comparison-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #eee; }
+.comparison-table th { background: #f9f9f9; font-weight: 700; color: #111; }
+.comparison-table tr:last-child td { border-bottom: none; }
+.comparison-table .check { color: #28a745; font-weight: bold; }
+.comparison-table .cross { color: #dc3545; }
+.highlight-cell { background-color: #f0f7ff; }
+.breadcrumbs { padding: 1rem 0; font-size: 0.9rem; color: #666; }
+.breadcrumbs a { color: #006aff; text-decoration: none; }
+.hero-catalogiq { padding: 6rem 0; background-color: #f0f7ff; }
+.hero-catalogiq .hero-title { color: #005ce6; }

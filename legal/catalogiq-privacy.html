@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - catalogIQ | Commerce Dash</title>
+    <meta name="description" content="Privacy Policy and Data Handling practices for the catalogIQ Shopify App by Commerce Dash.">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="/" class="brand-logo">Commerce Dash <span style="font-weight:400; color:#888;">/ Legal</span></a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="/catalogiq/">catalogIQ</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section style="padding: 4rem 0;">
+            <div class="container" style="max-width: 800px;">
+                <h1 style="margin-bottom: 2rem;">catalogIQ Privacy Policy</h1>
+                <p><em>Last Updated: March 5, 2026</em></p>
+                
+                <div style="background: #fff; padding: 3rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-top: 2rem;">
+                    
+                    <h2 style="margin-top:0;">1. Introduction</h2>
+                    <p>This Privacy Policy describes how Commerce Dash collects, uses, and protects Merchant information when installing and using the <strong>catalogIQ</strong> application on the Shopify platform.</p>
+
+                    <h2>2. Information Collection (Minimal Scope Setup)</h2>
+                    <p>catalogIQ is designed with the principle of "least privilege" collection. The App only accesses the absolute minimum necessary data needed to function. During OAuth installation, we request the following scopes:</p>
+                    <ul>
+                        <li><code>read_products, write_products</code>: To read and modify product data, tags, and variants.</li>
+                        <li><code>read_inventory, write_inventory</code>: To check stock states for complex visibility filtering.</li>
+                    </ul>
+                    <p>We <strong>do not</strong> access customer personal data (PII) or order financial history.</p>
+
+                    <h2>3. Data Handling & Architecture</h2>
+                    <p>All catalog sync and metafield intelligence operations happen via specialized edge computing. Our approach utilizes:</p>
+                    <ul>
+                        <li><strong>AWS DynamoDB Caching:</strong> Ephemeral caching for rapid app load times. Cache is strictly localized to your store.</li>
+                        <li><strong>KMS Encryption:</strong> All sensitive backend tokens and API keys are encrypted at-rest using AWS Key Management Service (KMS).</li>
+                        <li><strong>HMAC Verification:</strong> All incoming Shopify requests and webhooks are cryptographically verified using SHA-256 HMAC ensuring robust spoofing prevention.</li>
+                    </ul>
+
+                    <h2>4. Data Retention and Deletion</h2>
+                    <p>If you choose to uninstall the catalogIQ application from your Shopify Admin:</p>
+                    <ul>
+                        <li>Within 48 hours of receiving the <code>app/uninstalled</code> webhook, all permanent access tokens and shop-specific DynamoDB caches are aggressively wiped.</li>
+                        <li>Anonymized aggregate usage data (e.g., total syncs performed) may be kept solely for internal performance and infrastructure monitoring (CloudWatch log retention rules apply).</li>
+                    </ul>
+
+                    <h2>5. Third-Party Sharing</h2>
+                    <p>Your store data is never sold, traded, or shared with third parties under any circumstances. Internal app processes solely interact with the official Shopify API.</p>
+
+                    <h2>6. Contact & Support</h2>
+                    <p>If you have any specific inquiries regarding our GDPR compliance, data flows, or security models, please contact us at via our <a href="/contact.html">Contact Form</a>, detailing "Compliance" in the Subject.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
