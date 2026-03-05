@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GDPR & CCPA Compliance | catalogIQ</title>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: #222;
+      background: #fff;
+    }
+
+    a { color: #0055ff; }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #000;
+      color: #fff;
+      padding: 8px 12px;
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: 2px solid #fff;
+    }
+
+    /* Navigation */
+    nav {
+      background: #f8f8f8;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 1rem;
+    }
+    nav a:focus {
+      outline: 2px solid #0055ff;
+      outline-offset: 2px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      margin-top: 2rem;
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header role="banner">
+  <nav aria-label="Primary navigation">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/features.html">Features</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li><a href="/comparison.html">Comparison</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="/gdpr-ccpa.html" aria-current="page">GDPR/CCPA</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main-content" role="main">
+
+<h1>GDPR & CCPA Compliance Statement</h1>
+<p>Last updated: <strong>March 2026</strong></p>
+
+<p>
+  catalogIQ is committed to protecting the privacy and rights of merchants and their customers. 
+  This statement outlines how the App aligns with the requirements of the 
+  <strong>General Data Protection Regulation (GDPR)</strong> and the 
+  <strong>California Consumer Privacy Act (CCPA)</strong>.
+</p>
+
+<h2>Data We Process</h2>
+<p>
+  catalogIQ processes only the information required to provide catalog management features 
+  within your Shopify store. This includes:
+</p>
+<ul>
+  <li>Shop domain and store metadata</li>
+  <li>Product and variant information</li>
+  <li>Metafields and definitions</li>
+  <li>Operational logs related to bulk edits, sync jobs, and visibility updates</li>
+</ul>
+
+<p>
+  catalogIQ does <strong>not</strong> collect or store customer-level personal data unless 
+  explicitly required by a feature you enable.
+</p>
+
+<h2>Legal Basis for Processing (GDPR)</h2>
+<p>
+  Under GDPR, catalogIQ processes data based on:
+</p>
+<ul>
+  <li><strong>Contractual necessity</strong> — to provide the App’s core functionality</li>
+  <li><strong>Legitimate interest</strong> — to maintain security, performance, and reliability</li>
+  <li><strong>Consent</strong> — when required for optional features</li>
+</ul>
+
+<h2>Merchant Rights Under GDPR</h2>
+<p>Merchants located in the EU/EEA have the right to:</p>
+<ul>
+  <li>Access the data catalogIQ stores about their shop</li>
+  <li>Request correction or deletion of stored information</li>
+  <li>Withdraw consent for optional features</li>
+  <li>Request a copy of their data in a portable format</li>
+</ul>
+
+<p>
+  Requests can be submitted by contacting us at 
+  <strong>support@catalogiq.app</strong>.
+</p>
+
+<h2>Consumer Rights Under CCPA</h2>
+<p>
+  catalogIQ does not sell or share personal information for advertising or marketing. 
+  For merchants subject to CCPA, the App supports:
+</p>
+<ul>
+  <li><strong>Right to Know</strong> — transparency about what data is processed</li>
+  <li><strong>Right to Delete</strong> — removal of stored shop data upon request</li>
+  <li><strong>Right to Non‑Discrimination</strong> — no penalties for exercising rights</li>
+</ul>
+
+<h2>Data Storage & Security</h2>
+<p>
+  catalogIQ uses Amazon Web Services (AWS) for secure hosting and storage. Protections include:
+</p>
+<ul>
+  <li>Encrypted access tokens (AWS KMS)</li>
+  <li>Secure storage in DynamoDB</li>
+  <li>HTTPS for all communication</li>
+  <li>IAM least‑privilege access controls</li>
+</ul>
+
+<h2>Data Retention & Deletion</h2>
+<p>
+  Data is retained only as long as necessary to operate the App. When you uninstall catalogIQ:
+</p>
+<ul>
+  <li>Shopify revokes our API access immediately</li>
+  <li>Stored shop data and cached catalog information are removed within a reasonable timeframe</li>
+</ul>
+
+<h2>International Transfers</h2>
+<p>
+  catalogIQ may process data in the United States or other AWS regions. All transfers comply 
+  with applicable data protection laws.
+</p>
+
+<h2>Contact</h2>
+<p>
+  For GDPR or CCPA inquiries, contact us at:<br>
+  <strong>support@catalogiq.app</strong>
+</p>
+
+</main>
+
+<footer role="contentinfo" style="padding:2rem; text-align:center;">
+  <p>&copy; 2026 catalogIQ</p>
+</footer>
+
+</body>
+</html>

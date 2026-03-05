@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service | catalogIQ</title>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: #222;
+      background: #fff;
+    }
+
+    a { color: #0055ff; }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #000;
+      color: #fff;
+      padding: 8px 12px;
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: 2px solid #fff;
+    }
+
+    /* Navigation */
+    nav {
+      background: #f8f8f8;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 1rem;
+    }
+    nav a:focus {
+      outline: 2px solid #0055ff;
+      outline-offset: 2px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      margin-top: 2rem;
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<header role="banner">
+  <nav aria-label="Primary navigation">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/features.html">Features</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li><a href="/comparison.html">Comparison</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+      <li><a href="/privacy.html">Privacy</a></li>
+      <li><a href="/terms.html" aria-current="page">Terms</a></li>
+      <li><a href="/gdpr-ccpa.html">GDPR/CCPA</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main-content" role="main">
+
+<h1>Terms of Service</h1>
+<p>Last updated: <strong>March 2026</strong></p>
+
+<p>
+  These Terms of Service (“Terms”) govern your use of the catalogIQ Shopify App 
+  (“the App”, “we”, “our”, or “us”). By installing or using the App, you agree to 
+  these Terms.
+</p>
+
+<h2>Use of the App</h2>
+<p>
+  catalogIQ provides tools for managing and updating product catalogs within Shopify. 
+  You may use the App only in accordance with Shopify’s Terms of Service and applicable laws.
+</p>
+
+<p>You are responsible for:</p>
+<ul>
+  <li>Ensuring the accuracy of changes made through the App</li>
+  <li>Maintaining access to your Shopify store</li>
+  <li>Any actions taken by users with access to your store’s admin panel</li>
+</ul>
+
+<h2>Shopify Integration</h2>
+<p>
+  The App requires access to your Shopify store through OAuth authorization. 
+  By installing the App, you grant catalogIQ permission to:
+</p>
+<ul>
+  <li>Read and modify product and variant data</li>
+  <li>Access metafields and definitions</li>
+  <li>Receive webhook updates</li>
+  <li>Perform bulk operations on your behalf</li>
+</ul>
+
+<p>
+  Access tokens are encrypted and stored securely using AWS KMS.
+</p>
+
+<h2>Billing & Fees</h2>
+<p>
+  catalogIQ uses Shopify’s billing system. Charges, subscription tiers, and trial periods 
+  (if applicable) are displayed during installation.
+</p>
+
+<p>
+  All billing is handled directly by Shopify. Uninstalling the App stops future charges 
+  but does not retroactively refund past charges unless required by Shopify’s policies.
+</p>
+
+<h2>Data Handling</h2>
+<p>
+  Our data practices are described in the catalogIQ Privacy Policy. By using the App, 
+  you consent to the collection and processing of data as outlined there.
+</p>
+
+<h2>Acceptable Use</h2>
+<p>You agree not to:</p>
+<ul>
+  <li>Use the App for unlawful or harmful activities</li>
+  <li>Attempt to access or modify data belonging to other merchants</li>
+  <li>Reverse engineer or interfere with the App’s functionality</li>
+</ul>
+
+<h2>Service Availability</h2>
+<p>
+  catalogIQ uses a serverless AWS architecture designed for high availability. 
+  However, we do not guarantee uninterrupted service and may perform maintenance 
+  or updates as needed.
+</p>
+
+<h2>Limitation of Liability</h2>
+<p>
+  To the fullest extent permitted by law, catalogIQ is not liable for:
+</p>
+<ul>
+  <li>Loss of revenue, profits, or data</li>
+  <li>Errors resulting from bulk edits or product changes initiated by the merchant</li>
+  <li>Downtime caused by Shopify, AWS, or third‑party services</li>
+</ul>
+
+<p>
+  Your use of the App is at your own risk.
+</p>
+
+<h2>Termination</h2>
+<p>
+  You may uninstall the App at any time. Upon uninstallation, Shopify revokes our access 
+  token and we remove stored shop data within a reasonable timeframe.
+</p>
+
+<p>
+  We may suspend or terminate access if you violate these Terms.
+</p>
+
+<h2>Changes to These Terms</h2>
+<p>
+  We may update these Terms periodically. Continued use of the App after changes are posted 
+  constitutes acceptance of the updated Terms.
+</p>
+
+<h2>Contact</h2>
+<p>
+  For questions about these Terms, contact us at:<br>
+  <strong>support@catalogiq.app</strong>
+</p>
+
+</main>
+
+<footer role="contentinfo" style="padding:2rem; text-align:center;">
+  <p>&copy; 2026 catalogIQ</p>
+</footer>
+
+</body>
+</html>

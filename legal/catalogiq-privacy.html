@@ -1,75 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - catalogIQ | Commerce Dash</title>
-    <meta name="description" content="Privacy Policy and Data Handling practices for the catalogIQ Shopify App by Commerce Dash.">
-    <link rel="stylesheet" href="../css/styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | catalogIQ</title>
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      color: #222;
+      background: #fff;
+    }
+
+    a { color: #0055ff; }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: #000;
+      color: #fff;
+      padding: 8px 12px;
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: 0;
+      outline: 2px solid #fff;
+    }
+
+    /* Navigation */
+    nav {
+      background: #f8f8f8;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 1rem;
+    }
+    nav a:focus {
+      outline: 2px solid #0055ff;
+      outline-offset: 2px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h1, h2, h3 {
+      font-weight: 600;
+      margin-top: 2rem;
+    }
+
+    /* Screen reader only */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+  </style>
 </head>
+
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a href="/" class="brand-logo">Commerce Dash <span style="font-weight:400; color:#888;">/ Legal</span></a>
-            <nav class="main-nav" aria-label="Main Navigation">
-                <ul>
-                    <li><a href="/catalogiq/">catalogIQ</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <main id="main-content">
-        <section style="padding: 4rem 0;">
-            <div class="container" style="max-width: 800px;">
-                <h1 style="margin-bottom: 2rem;">catalogIQ Privacy Policy</h1>
-                <p><em>Last Updated: March 5, 2026</em></p>
-                
-                <div style="background: #fff; padding: 3rem; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-top: 2rem;">
-                    
-                    <h2 style="margin-top:0;">1. Introduction</h2>
-                    <p>This Privacy Policy describes how Commerce Dash collects, uses, and protects Merchant information when installing and using the <strong>catalogIQ</strong> application on the Shopify platform.</p>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
-                    <h2>2. Information Collection (Minimal Scope Setup)</h2>
-                    <p>catalogIQ is designed with the principle of "least privilege" collection. The App only accesses the absolute minimum necessary data needed to function. During OAuth installation, we request the following scopes:</p>
-                    <ul>
-                        <li><code>read_products, write_products</code>: To read and modify product data, tags, and variants.</li>
-                        <li><code>read_inventory, write_inventory</code>: To check stock states for complex visibility filtering.</li>
-                    </ul>
-                    <p>We <strong>do not</strong> access customer personal data (PII) or order financial history.</p>
+<header role="banner">
+  <nav aria-label="Primary navigation">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/features.html">Features</a></li>
+      <li><a href="/pricing.html">Pricing</a></li>
+      <li><a href="/comparison.html">Comparison</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+      <li><a href="/privacy.html" aria-current="page">Privacy</a></li>
+      <li><a href="/terms.html">Terms</a></li>
+      <li><a href="/gdpr-ccpa.html">GDPR/CCPA</a></li>
+    </ul>
+  </nav>
+</header>
 
-                    <h2>3. Data Handling & Architecture</h2>
-                    <p>All catalog sync and metafield intelligence operations happen via specialized edge computing. Our approach utilizes:</p>
-                    <ul>
-                        <li><strong>AWS DynamoDB Caching:</strong> Ephemeral caching for rapid app load times. Cache is strictly localized to your store.</li>
-                        <li><strong>KMS Encryption:</strong> All sensitive backend tokens and API keys are encrypted at-rest using AWS Key Management Service (KMS).</li>
-                        <li><strong>HMAC Verification:</strong> All incoming Shopify requests and webhooks are cryptographically verified using SHA-256 HMAC ensuring robust spoofing prevention.</li>
-                    </ul>
+<main id="main-content" role="main">
 
-                    <h2>4. Data Retention and Deletion</h2>
-                    <p>If you choose to uninstall the catalogIQ application from your Shopify Admin:</p>
-                    <ul>
-                        <li>Within 48 hours of receiving the <code>app/uninstalled</code> webhook, all permanent access tokens and shop-specific DynamoDB caches are aggressively wiped.</li>
-                        <li>Anonymized aggregate usage data (e.g., total syncs performed) may be kept solely for internal performance and infrastructure monitoring (CloudWatch log retention rules apply).</li>
-                    </ul>
+<h1>Privacy Policy</h1>
+<p>Last updated: <strong>March 2026</strong></p>
 
-                    <h2>5. Third-Party Sharing</h2>
-                    <p>Your store data is never sold, traded, or shared with third parties under any circumstances. Internal app processes solely interact with the official Shopify API.</p>
+<p>
+  This Privacy Policy explains how <strong>catalogIQ</strong> (“the App”, “we”, “our”) 
+  collects, uses, and protects information when merchants install or use the App 
+  within their Shopify store.
+</p>
 
-                    <h2>6. Contact & Support</h2>
-                    <p>If you have any specific inquiries regarding our GDPR compliance, data flows, or security models, please contact us at via our <a href="/contact.html">Contact Form</a>, detailing "Compliance" in the Subject.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+<h2>Information We Collect</h2>
 
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+<h3>Shop Information</h3>
+<p>
+  When you install the App, Shopify provides store metadata such as your shop domain, 
+  contact email, and access tokens required for secure API communication.
+</p>
+
+<h3>Product & Variant Data</h3>
+<p>
+  To deliver catalog management features, we process product and variant information, 
+  including titles, SKUs, inventory, pricing, metafields, and related metadata.
+</p>
+
+<h3>Operational Logs</h3>
+<p>
+  The App records activity such as bulk edits, sync jobs, and visibility updates to 
+  provide transparency and troubleshooting support.
+</p>
+
+<h3>Webhook Data</h3>
+<p>
+  Shopify sends updates when products or inventory change. These events allow the App 
+  to keep your catalog synchronized.
+</p>
+
+<h2>How We Use Your Information</h2>
+<ul>
+  <li>Displaying and managing your product catalog</li>
+  <li>Executing bulk edits and metafield updates</li>
+  <li>Maintaining accurate data through sync jobs</li>
+  <li>Supporting visibility automation via Shopify Flow</li>
+  <li>Providing activity logs and operational insights</li>
+</ul>
+
+<p>
+  We do <strong>not</strong> sell or share your data for advertising.
+</p>
+
+<h2>Data Storage & Security</h2>
+<p>
+  catalogIQ uses AWS services including DynamoDB, Lambda, and KMS encryption. 
+  All communication occurs over HTTPS, and access tokens are encrypted at rest.
+</p>
+
+<h2>Data Retention</h2>
+<p>
+  Data is retained only as long as necessary. Cached catalog data expires automatically. 
+  When you uninstall the App, Shopify revokes our access token and we remove stored data 
+  within a reasonable timeframe.
+</p>
+
+<h2>Your Rights</h2>
+<p>
+  You may request data deletion or a summary of stored information by contacting us at 
+  <strong>support@catalogiq.app</strong>.
+</p>
+
+<h2>Changes to This Policy</h2>
+<p>
+  Updates may occur periodically. The “Last updated” date reflects the most recent revision.
+</p>
+
+<h2>Contact</h2>
+<p>
+  For privacy inquiries, email: <strong>support@catalogiq.app</strong>
+</p>
+
+</main>
+
+<footer role="contentinfo" style="padding:2rem; text-align:center;">
+  <p>&copy; 2026 catalogIQ</p>
+</footer>
+
 </body>
 </html>
