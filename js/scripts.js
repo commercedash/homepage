@@ -1,6 +1,19 @@
 // Commerce Dash - Vanilla JS for UI interactions
 
 document.addEventListener('DOMContentLoaded', () => {
+    const hubspotPortalId = '245451684';
+
+    // Load HubSpot tracking once from shared JS so it applies across every page.
+    if (!document.getElementById('hs-script-loader')) {
+        const hsScript = document.createElement('script');
+        hsScript.type = 'text/javascript';
+        hsScript.id = 'hs-script-loader';
+        hsScript.async = true;
+        hsScript.defer = true;
+        hsScript.src = `//js-na2.hs-scripts.com/${hubspotPortalId}.js`;
+        document.head.appendChild(hsScript);
+    }
+
     const mobileBreakpoint = window.matchMedia('(max-width: 980px)');
 
     // Inject a menu toggle for each header so all pages share mobile navigation behavior.
