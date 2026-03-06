@@ -10,7 +10,10 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="/" class="brand-logo">Commerce Dash <span style="font-weight:400; color:#888;">/ catalogIQ</span></a>
+            <a href="/" class="brand-logo" aria-label="Commerce Dash home">
+                <img src="../media/logo-horizontal.jpg" alt="Commerce Dash" class="brand-logo-image">
+                <span class="catalog-tagline">/ catalogIQ</span>
+            </a>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
                     <li><a href="index.html">Overview</a></li>
@@ -23,31 +26,31 @@
     </header>
 
     <main id="main-content">
-        <section class="hero-catalogiq text-center" style="padding: 4rem 0;">
+        <section class="hero-catalogiq text-center">
             <div class="container">
                 <h1 class="hero-title">Deep Dive: Features Built for Scale</h1>
                 <p class="hero-subtitle">Stop using basic tag editors to manage complex metafield structures.</p>
             </div>
         </section>
 
-        <section class="bg-light" style="padding: 5rem 0;">
+        <section class="bg-light section-pad-xl">
             <div class="container">
-                <div class="grid" style="grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem;">
+                <div class="grid feature-grid-two">
                     <div>
                         <h2 class="section-title">Advanced Filtering & Bulk Operations</h2>
                         <p>Go beyond simple tags. Filter by complex metafield arguments, inventory states, and pricing tiers. Apply changes to 100,000+ products using native Shopify Bulk Operations integrations.</p>
                     </div>
-                    <div style="background:#fff; padding: 4rem; text-align:center; border: 1px dashed #ccc; border-radius: 8px;">
+                    <div class="media-placeholder">
                         <em>[Screenshot: Intuitive filtering query builder UI]</em>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section style="padding: 5rem 0;">
+        <section class="section-pad-xl">
             <div class="container">
-                <div class="grid" style="grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem;">
-                    <div style="background:#fff; padding: 4rem; text-align:center; border: 1px dashed #ccc; border-radius: 8px;">
+                <div class="grid feature-grid-two">
+                    <div class="media-placeholder">
                         <em>[Screenshot: Embedded table editing product vs variant metafields]</em>
                     </div>
                     <div>
@@ -58,14 +61,14 @@
             </div>
         </section>
 
-        <section class="bg-light" style="padding: 5rem 0;">
+        <section class="bg-light section-pad-xl">
             <div class="container">
-                <div class="grid" style="grid-template-columns: 1fr 1fr; align-items: center; gap: 4rem;">
+                <div class="grid feature-grid-two">
                     <div>
                         <h2 class="section-title">Enterprise-Grade Serverless Architecture</h2>
                         <p>Your store's data is sensitive. We treat it that way. Serverless AWS architecture, KMS encryption, IAM least privilege, and HMAC verification keep your data locked down and lightning-fast via DynamoDB caching.</p>
                     </div>
-                    <div style="background:#fff; padding: 4rem; text-align:center; border: 1px dashed #ccc; border-radius: 8px;">
+                    <div class="media-placeholder">
                         <em>[Diagram: AWS Edge serverless data flow]</em>
                     </div>
                 </div>
@@ -77,17 +80,24 @@
     <footer class="site-footer">
         <!-- Reusing same footer via HTML -->
         <div class="container footer-grid">
-            <div class="footer-brand">
-                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <a href="/" aria-label="Commerce Dash home">
+                        <img src="../media/logo-1.png" alt="Commerce Dash logo" class="footer-logo-image">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <nav aria-label="Footer Navigation">
+                        <ul>
+                            <li><a href="/">CommerceDash Suite</a></li>
+                            <li><a href="../contact.html">Contact Us</a></li>
+                            <li><a href="../legal/catalogiq-privacy.html">Privacy Policy</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div class="footer-links">
-                <nav aria-label="Footer Navigation">
-                    <ul>
-                        <li><a href="/">CommerceDash Suite</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../legal/catalogiq-privacy.html">Privacy Policy</a></li>
-                    </ul>
-                </nav>
+            <div class="footer-copy">
+                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
             </div>
         </div>
     </footer>

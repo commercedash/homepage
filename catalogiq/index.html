@@ -10,7 +10,10 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="/" class="brand-logo">Commerce Dash <span style="font-weight:400; color:#888;">/ catalogIQ</span></a>
+            <a href="/" class="brand-logo" aria-label="Commerce Dash home">
+                <img src="../media/logo-horizontal.jpg" alt="Commerce Dash" class="brand-logo-image">
+                <span class="catalog-tagline">/ catalogIQ</span>
+            </a>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
                     <li><a href="features.html">Features</a></li>
@@ -30,12 +33,12 @@
             <div class="container">
                 <h1 class="hero-title">Bulk Edit Your Shopify Catalog with Confidence</h1>
                 <p class="hero-subtitle">The fastest, safest way to manage massive Shopify catalogs. Real-time sync, advanced metafield intelligence, and complete rollback capabilities—built for Shopify Plus.</p>
-                <div class="hero-actions" style="margin-bottom: 3rem;">
+                <div class="hero-actions hero-actions-spaced">
                     <a href="https://apps.shopify.com" class="btn btn-primary">Install on Shopify</a>
-                    <a href="../contact.html" class="btn btn-secondary" style="margin-left: 1rem;">Book a Demo</a>
+                    <a href="../contact.html" class="btn btn-secondary">Book a Demo</a>
                 </div>
                 <!-- Visual Placeholder -->
-                <div class="video-placeholder" style="background: #222; color: #fff; padding: 6rem; border-radius: 8px; max-width: 800px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                <div class="video-placeholder">
                     <p><em>[Placeholder: Lightweight looping MP4 of the catalogIQ UI performing a bulk metafield update on 1,000+ variants]</em></p>
                 </div>
             </div>
@@ -67,16 +70,16 @@
             </div>
         </section>
 
-        <section class="social-proof-section text-center" style="padding: 5rem 0;">
+        <section class="social-proof-section text-center">
             <div class="container">
                 <h2 class="section-title">Trusted by High-Volume Merchants</h2>
-                <div class="logos-placeholder" style="display:flex; justify-content:center; gap:3rem; opacity:0.5; margin: 3rem 0;">
+                <div class="logos-placeholder">
                     <em>[Logo Placeholder 1]</em>
                     <em>[Logo Placeholder 2]</em>
                     <em>[Logo Placeholder 3]</em>
                     <em>[Logo Placeholder 4]</em>
                 </div>
-                <blockquote style="font-size: 1.25rem; font-style: italic; color: #555; max-width: 600px; margin: 0 auto; border-left: 4px solid #006aff; padding-left: 1.5rem; text-align: left;">
+                <blockquote class="testimonial-quote">
                     "catalogIQ turned our multi-day catalog update into a 5-minute task. The variant-level control is an absolute game-changer."
                     <footer style="margin-top: 1rem; font-weight: 600; font-style: normal;">— [Store Owner Placeholder], Logistics Lead</footer>
                 </blockquote>
@@ -86,17 +89,24 @@
 
     <footer class="site-footer">
         <div class="container footer-grid">
-            <div class="footer-brand">
-                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <a href="/" aria-label="Commerce Dash home">
+                        <img src="../media/logo-1.png" alt="Commerce Dash logo" class="footer-logo-image">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <nav aria-label="Footer Navigation">
+                        <ul>
+                            <li><a href="/">CommerceDash Suite</a></li>
+                            <li><a href="../contact.html">Contact Us</a></li>
+                            <li><a href="../legal/catalogiq-privacy.html">Privacy Policy</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div class="footer-links">
-                <nav aria-label="Footer Navigation">
-                    <ul>
-                        <li><a href="/">CommerceDash Suite</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../legal/catalogiq-privacy.html">Privacy Policy</a></li>
-                    </ul>
-                </nav>
+            <div class="footer-copy">
+                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
             </div>
         </div>
     </footer>

@@ -10,7 +10,10 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="/" class="brand-logo">Commerce Dash <span style="font-weight:400; color:#888;">/ catalogIQ</span></a>
+            <a href="/" class="brand-logo" aria-label="Commerce Dash home">
+                <img src="../media/logo-horizontal.jpg" alt="Commerce Dash" class="brand-logo-image">
+                <span class="catalog-tagline">/ catalogIQ</span>
+            </a>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
                     <li><a href="index.html">Overview</a></li>
@@ -23,55 +26,55 @@
     </header>
 
     <main id="main-content">
-        <section class="hero-catalogiq text-center" style="padding: 4rem 0;">
+        <section class="hero-catalogiq text-center">
             <div class="container">
                 <h1 class="hero-title">Transparent, Scale-Ready Pricing</h1>
                 <p class="hero-subtitle">No hidden fees. Designed to support massive catalogs without compromising on sync speeds.</p>
             </div>
         </section>
 
-        <section class="bg-light" style="padding: 5rem 0;">
+        <section class="bg-light section-pad-xl">
             <div class="container">
                 <div class="grid cards-grid">
-                    <article class="card" style="border-top: 4px solid #aaa;">
+                    <article class="card tier-card-muted">
                         <div class="card-content">
-                            <h3>Starter <br><span style="font-size: 2.5rem; color:#111;">$19</span><span style="font-size:1rem; color:#666; font-weight:normal;">/mo</span></h3>
-                            <p style="font-size:0.9rem; margin-bottom: 2rem;">For growing stores managing simple catalogs.</p>
-                            <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
-                                <li style="margin-bottom:0.5rem;">&#10004; Up to 5,000 products</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Basic bulk edits</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Daily automated syncs</li>
+                            <h3>Starter <br><span class="tier-price">$19</span><span class="tier-period">/mo</span></h3>
+                            <p class="tier-note">For growing stores managing simple catalogs.</p>
+                            <ul class="pricing-list">
+                                <li>&#10004; Up to 5,000 products</li>
+                                <li>&#10004; Basic bulk edits</li>
+                                <li>&#10004; Daily automated syncs</li>
                             </ul>
-                            <a href="https://apps.shopify.com" class="btn btn-secondary text-center" style="display:block;">Start Free Trial</a>
+                            <a href="https://apps.shopify.com" class="btn btn-secondary btn-block">Start Free Trial</a>
                         </div>
                     </article>
                     
-                    <article class="card" style="border: 2px solid #006aff; box-shadow: 0 10px 20px rgba(0,106,255,0.15); transform: translateY(-10px);">
+                    <article class="card tier-card-featured">
                         <div class="card-content">
-                            <div style="background:#006aff; color:#fff; text-align:center; padding: 0.5rem; margin:-2rem -2rem 1.5rem; font-weight:bold; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px;">Most Popular</div>
-                            <h3>Growth <br><span style="font-size: 2.5rem; color:#006aff;">$49</span><span style="font-size:1rem; color:#666; font-weight:normal;">/mo</span></h3>
-                            <p style="font-size:0.9rem; margin-bottom: 2rem;">For active stores requiring complex metafield logic.</p>
-                            <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
-                                <li style="margin-bottom:0.5rem; font-weight:bold;">&#10004; Up to 50,000 products</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Variant-level metafield syncing</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Real-time DynamoDB caching</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Granular activity logs</li>
+                            <div class="tier-badge">Most Popular</div>
+                            <h3>Growth <br><span class="tier-price tier-price-accent">$49</span><span class="tier-period">/mo</span></h3>
+                            <p class="tier-note">For active stores requiring complex metafield logic.</p>
+                            <ul class="pricing-list">
+                                <li><strong>&#10004; Up to 50,000 products</strong></li>
+                                <li>&#10004; Variant-level metafield syncing</li>
+                                <li>&#10004; Real-time DynamoDB caching</li>
+                                <li>&#10004; Granular activity logs</li>
                             </ul>
-                            <a href="https://apps.shopify.com" class="btn btn-primary text-center" style="display:block;">Start Free Trial</a>
+                            <a href="https://apps.shopify.com" class="btn btn-primary btn-block">Start Free Trial</a>
                         </div>
                     </article>
 
-                    <article class="card" style="border-top: 4px solid #111;">
+                    <article class="card tier-card-plus">
                         <div class="card-content">
-                            <h3>Plus <br><span style="font-size: 2.5rem; color:#111;">$129</span><span style="font-size:1rem; color:#666; font-weight:normal;">/mo</span></h3>
-                            <p style="font-size:0.9rem; margin-bottom: 2rem;">For high-volume merchants and enterprise migrations.</p>
-                            <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
-                                <li style="margin-bottom:0.5rem; font-weight:bold;">&#10004; Unlimited products</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Priority AWS queueing</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Custom Shopify Flow triggers</li>
-                                <li style="margin-bottom:0.5rem;">&#10004; Dedicated onboarding support</li>
+                            <h3>Plus <br><span class="tier-price">$129</span><span class="tier-period">/mo</span></h3>
+                            <p class="tier-note">For high-volume merchants and enterprise migrations.</p>
+                            <ul class="pricing-list">
+                                <li><strong>&#10004; Unlimited products</strong></li>
+                                <li>&#10004; Priority AWS queueing</li>
+                                <li>&#10004; Custom Shopify Flow triggers</li>
+                                <li>&#10004; Dedicated onboarding support</li>
                             </ul>
-                            <a href="https://apps.shopify.com" class="btn btn-secondary text-center" style="display:block;">Start Free Trial</a>
+                            <a href="https://apps.shopify.com" class="btn btn-secondary btn-block">Start Free Trial</a>
                         </div>
                     </article>
                 </div>
@@ -81,17 +84,24 @@
 
     <footer class="site-footer">
         <div class="container footer-grid">
-            <div class="footer-brand">
-                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <a href="/" aria-label="Commerce Dash home">
+                        <img src="../media/logo-1.png" alt="Commerce Dash logo" class="footer-logo-image">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <nav aria-label="Footer Navigation">
+                        <ul>
+                            <li><a href="/">CommerceDash Suite</a></li>
+                            <li><a href="../contact.html">Contact Us</a></li>
+                            <li><a href="../legal/catalogiq-privacy.html">Privacy Policy</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div class="footer-links">
-                <nav aria-label="Footer Navigation">
-                    <ul>
-                        <li><a href="/">CommerceDash Suite</a></li>
-                        <li><a href="../contact.html">Contact Us</a></li>
-                        <li><a href="../legal/catalogiq-privacy.html">Privacy Policy</a></li>
-                    </ul>
-                </nav>
+            <div class="footer-copy">
+                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
             </div>
         </div>
     </footer>

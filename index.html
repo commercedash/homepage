@@ -10,11 +10,13 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <a href="/" class="brand-logo">Commerce Dash</a>
+            <a href="/" class="brand-logo" aria-label="Commerce Dash home">
+                <img src="./media/logo-horizontal.jpg" alt="Commerce Dash logo" class="brand-logo-image">
+            </a>
             <nav class="main-nav" aria-label="Main Navigation">
                 <ul>
-                    <li><a href="/catalogiq/">catalogIQ</a></li>
-                    <li><a href="/contact.html">Contact</a></li>
+                    <li><a href="./catalogiq/index.html">catalogIQ</a></li>
+                    <li><a href="./contact.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -26,7 +28,7 @@
                 <h1 class="hero-title">Powerful, Plus-Grade Apps for Shopify Merchants</h1>
                 <p class="hero-subtitle">Scale your operations with serverless architecture, enterprise-grade security, and robust integrations.</p>
                 <div class="hero-actions">
-                    <a href="/catalogiq/" class="btn btn-primary">Explore Our Apps</a>
+                    <a href="./catalogiq/index.html" class="btn btn-primary">Explore Our Apps</a>
                 </div>
             </div>
         </section>
@@ -39,7 +41,7 @@
                         <div class="card-content">
                             <h3>catalogIQ</h3>
                             <p>The fastest, safest way to manage massive Shopify catalogs. Real-time sync, advanced metafield intelligence, and absolute rollback capabilities.</p>
-                            <a href="/catalogiq/" class="btn btn-secondary">Learn More</a>
+                            <a href="./catalogiq/index.html" class="btn btn-secondary">Learn More</a>
                         </div>
                     </article>
                     <article class="card placeholder-card">
@@ -62,17 +64,24 @@
 
     <footer class="site-footer">
         <div class="container footer-grid">
-            <div class="footer-brand">
-                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
+            <div class="footer-left">
+                <div class="footer-brand">
+                    <a href="/" aria-label="Commerce Dash home">
+                        <img src="./media/logo-1.png" alt="Commerce Dash logo" class="footer-logo-image">
+                    </a>
+                </div>
+                <div class="footer-links">
+                    <nav aria-label="Footer Navigation">
+                        <ul>
+                            <li><a href="./catalogiq/index.html">catalogIQ</a></li>
+                            <li><a href="./contact.html">Contact Us</a></li>
+                            <li><a href="./legal/catalogiq-privacy.html">catalogIQ Privacy Policy</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <div class="footer-links">
-                <nav aria-label="Footer Navigation">
-                    <ul>
-                        <li><a href="/catalogiq/">catalogIQ</a></li>
-                        <li><a href="/contact.html">Contact Us</a></li>
-                        <li><a href="/legal/catalogiq-privacy.html">catalogIQ Privacy Policy</a></li>
-                    </ul>
-                </nav>
+            <div class="footer-copy">
+                <p>&copy; 2026 Commerce Dash. All rights reserved.</p>
             </div>
         </div>
     </footer>
