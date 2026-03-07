@@ -33,7 +33,12 @@ body { font-family: 'Nunito Sans', 'Segoe UI', sans-serif; line-height: 1.6; mar
 .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
 .site-header { background: rgba(255, 255, 255, 0.96); box-shadow: 0 4px 18px rgba(30, 12, 64, 0.08); padding: 1.1rem 0; width: 100%; top: 0; position: sticky; z-index: 1000; backdrop-filter: blur(6px); }
 .site-header .container { display: flex; justify-content: space-between; align-items: center; }
-.brand-logo { display: inline-flex; align-items: center; text-decoration: none; }
+.brand-logo {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.72rem;
+	text-decoration: none;
+}
 .brand-logo-image { display: block; width: clamp(180px, 26vw, 320px); height: auto; }
 .brand-subline { font-weight: 700; color: var(--brand-primary); margin-left: 0.5rem; }
 .nav-toggle {
@@ -251,8 +256,14 @@ table.comparison-table { width: 100%; border-collapse: collapse; background: var
 .hero-catalogiq .hero-title { color: var(--brand-primary-dark); }
 
 .catalog-tagline {
+	display: inline-flex;
+	align-items: center;
+	padding-left: 0.72rem;
+	border-left: 2px solid rgba(79, 35, 153, 0.16);
 	font-weight: 700;
-	color: var(--brand-primary);
+	font-size: 1.05rem;
+	letter-spacing: 0.01em;
+	color: #6540a7;
 }
 
 .inline-panel {
@@ -267,6 +278,39 @@ table.comparison-table { width: 100%; border-collapse: collapse; background: var
 	grid-template-columns: 1fr 1fr;
 	align-items: center;
 	gap: 4rem;
+}
+
+.section-heading {
+	margin: 0 auto 3rem;
+}
+
+.section-lead {
+	font-size: 1.08rem;
+	line-height: 1.7;
+	color: var(--text-muted);
+	margin: 0;
+}
+
+.overview-feature-stack {
+	background:
+		radial-gradient(circle at top left, rgba(244, 154, 97, 0.12), transparent 30%),
+		radial-gradient(circle at top right, rgba(79, 35, 153, 0.1), transparent 32%),
+		linear-gradient(180deg, #fffdfb 0%, #f7f4fb 100%);
+}
+
+.overview-feature-row {
+	margin-top: 3rem;
+}
+
+.feature-bullets-compact {
+	margin: 1.1rem 0 0;
+	padding-left: 1.2rem;
+	color: var(--text-muted);
+	line-height: 1.7;
+}
+
+.feature-bullets-compact li + li {
+	margin-top: 0.45rem;
 }
 
 .media-placeholder {
@@ -294,6 +338,107 @@ table.comparison-table { width: 100%; border-collapse: collapse; background: var
 	max-width: 800px;
 	margin: 0 auto;
 	box-shadow: 0 10px 30px rgba(28, 11, 54, 0.22);
+}
+
+.illustration-shell {
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	overflow: visible;
+}
+
+.illustration-shell img,
+.showcase-media img {
+	display: block;
+	width: 100%;
+	height: auto;
+	background: #fff;
+	border: 1px solid rgba(96, 78, 140, 0.2);
+	border-radius: 28px;
+	box-shadow: 0 28px 60px rgba(48, 23, 92, 0.14), 0 10px 24px rgba(35, 22, 63, 0.08);
+}
+
+.illustration-hero {
+	max-width: 960px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.illustration-inline {
+	padding: 0;
+}
+
+.showcase-media {
+	position: relative;
+	margin: 0;
+}
+
+.showcase-inset {
+	position: absolute;
+	right: 1.5rem;
+	top: 1.5rem;
+	width: min(32%, 220px);
+	padding: 0.72rem 0.72rem 0.8rem;
+	border-radius: 18px;
+	border: 1px solid rgba(96, 78, 140, 0.2);
+	background: rgba(255, 255, 255, 0.88);
+	box-shadow: 0 14px 24px rgba(40, 20, 82, 0.12);
+	backdrop-filter: blur(10px);
+	text-align: left;
+}
+
+.showcase-inset-label {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.22rem 0.5rem;
+	border-radius: 999px;
+	background: #f6efff;
+	color: var(--brand-primary);
+	font-size: 0.64rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	margin-bottom: 0.45rem;
+}
+
+.showcase-inset strong {
+	display: block;
+	font-size: 0.84rem;
+	line-height: 1.2;
+	margin-bottom: 0.55rem;
+	color: var(--text-main);
+}
+
+.showcase-inset-field {
+	padding: 0.52rem 0.65rem;
+	border-radius: 12px;
+	background: #f8f4ff;
+	border: 1px solid #e1d5f7;
+	font-weight: 700;
+	font-size: 0.74rem;
+	line-height: 1.2;
+	color: var(--brand-primary-dark);
+	margin-bottom: 0.5rem;
+}
+
+.showcase-inset-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.showcase-inset-pills span {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.3rem 0.48rem;
+	border-radius: 999px;
+	background: #fff7ef;
+	border: 1px solid #f5d1bd;
+	color: #7a4a25;
+	font-size: 0.66rem;
+	line-height: 1.15;
+	font-weight: 700;
 }
 
 .social-proof-section {
@@ -421,9 +566,21 @@ table.comparison-table { width: 100%; border-collapse: collapse; background: var
 	.site-header .container { gap: 1rem; }
 	.main-nav ul { gap: 0.9rem; }
 	.brand-logo-image { width: clamp(150px, 52vw, 240px); }
+	.catalog-tagline {
+		font-size: 0.92rem;
+		padding-left: 0.55rem;
+	}
 	.feature-grid-two { grid-template-columns: 1fr; gap: 2rem; }
+	.overview-feature-row { margin-top: 2.5rem; }
 	.hero-actions .btn + .btn { margin-left: 0; margin-top: 0.75rem; }
 	.video-placeholder { padding: 2.4rem 1.2rem; }
+	.illustration-shell img,
+	.showcase-media img { border-radius: 22px; }
+	.showcase-inset {
+		position: static;
+		width: auto;
+		margin-top: 0.85rem;
+	}
 	.footer-grid { grid-template-columns: 1fr; align-items: start; text-align: left; }
 	.footer-logo-col { justify-content: flex-start; }
 	.footer-app-col { justify-self: start; text-align: left; }

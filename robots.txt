@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /catalogiq/illustration-playground.html
+
+Sitemap: https://www.commercedash.io/sitemap.xml
