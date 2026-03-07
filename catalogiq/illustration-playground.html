@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>catalogIQ Illustration Playground</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --play-bg: #f3f6f4;
+            --play-surface: #ffffff;
+            --play-border: #d7dfda;
+            --play-text: #1f2a24;
+            --play-muted: #6d7175;
+            --play-green: #008060;
+            --play-green-soft: #e7f5ef;
+            --play-blue: #2c6ecb;
+            --play-blue-soft: #e8f0fb;
+            --play-gray-soft: #eef2f0;
+            --play-shadow: 0 14px 28px rgba(31, 42, 36, 0.08), 0 4px 8px rgba(31, 42, 36, 0.06);
+        }
+
+        body {
+            background: var(--play-bg);
+            color: var(--play-text);
+        }
+
+        .playground-shell {
+            width: min(1400px, 94vw);
+            margin: 2rem auto 4rem;
+            display: grid;
+            grid-template-columns: 320px minmax(0, 1fr);
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .playground-panel,
+        .playground-canvas-wrap {
+            background: var(--play-surface);
+            border: 1px solid var(--play-border);
+            border-radius: 22px;
+            box-shadow: var(--play-shadow);
+        }
+
+        .playground-panel {
+            padding: 1.25rem;
+            position: sticky;
+            top: 100px;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin: 0 0 0.35rem;
+        }
+
+        .panel-copy {
+            color: var(--play-muted);
+            margin: 0 0 1rem;
+            font-size: 0.95rem;
+        }
+
+        .tool-group {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e8edea;
+        }
+
+        .tool-group h2 {
+            margin: 0 0 0.75rem;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: var(--play-muted);
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+        }
+
+        .tool-grid.three-up {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .tool-grid.four-up {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .tool-grid.icon-grid {
+            gap: 0.38rem;
+        }
+
+        .tool-btn,
+        .swatch,
+        .export-box {
+            border: 1px solid var(--play-border);
+            border-radius: 14px;
+            background: #fff;
+        }
+
+        .tool-btn {
+            padding: 0.42rem 0.46rem;
+            font: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--play-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+
+        .tool-btn.tool-btn--visual {
+            min-height: 0;
+            border: none;
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 6px;
+        }
+
+        .tool-btn.tool-btn--visual:hover,
+        .tool-btn.tool-btn--visual:focus-visible {
+            min-height: 0;
+            border: none;
+            background: transparent;
+            outline: none;
+        }
+
+        .tool-btn.tool-btn--icon {
+            min-height: 0;
+            padding: 6px;
+        }
+
+        .tool-btn__preview {
+            width: auto;
+            height: auto;
+            display: grid;
+            place-items: center;
+        }
+
+        .tool-btn--visual .tool-btn__preview > * {
+            pointer-events: none;
+        }
+
+        .tool-btn--icon .tool-btn__preview {
+            transform: none;
+            transform-origin: center;
+        }
+
+        .tool-btn--visual:hover .tool-btn__preview > *,
+        .tool-btn--visual:focus-visible .tool-btn__preview > * {
+            box-shadow: 0 0 0 2px rgba(44, 110, 203, 0.2);
+        }
+
+        .tool-btn--icon:hover .ui-icon-widget,
+        .tool-btn--icon:focus-visible .ui-icon-widget {
+            box-shadow: 0 0 0 2px rgba(44, 110, 203, 0.2);
+        }
+
+        .tool-btn__preview svg,
+        .tool-btn__preview span,
+        .tool-btn__preview div {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .tool-btn__mini-card,
+        .tool-btn__mini-filter,
+        .tool-btn__mini-table,
+        .tool-btn__mini-table-stack,
+        .tool-btn__mini-badge,
+        .tool-btn__mini-button {
+            position: relative;
+            border: 1px solid #d4dbd7;
+            background: #ffffff;
+            box-sizing: border-box;
+        }
+
+        .tool-btn__mini-card {
+            width: 56px;
+            height: 44px;
+            border-radius: 10px;
+        }
+
+        .tool-btn__mini-card::before,
+        .tool-btn__mini-card::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            border-radius: 999px;
+            background: #bcc5c1;
+        }
+
+        .tool-btn__mini-card::before {
+            top: 6px;
+            width: 16px;
+            height: 4px;
+        }
+
+        .tool-btn__mini-card::after {
+            bottom: 6px;
+            width: 22px;
+            height: 6px;
+            background: #e7f5ef;
+        }
+
+        .tool-btn__mini-filter {
+            width: 56px;
+            height: 42px;
+            border-radius: 10px;
+        }
+
+        .tool-btn__mini-filter::before,
+        .tool-btn__mini-filter::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            border-radius: 999px;
+        }
+
+        .tool-btn__mini-filter::before {
+            top: 7px;
+            width: 14px;
+            height: 4px;
+            background: #bcc5c1;
+        }
+
+        .tool-btn__mini-filter::after {
+            top: 15px;
+            width: 24px;
+            height: 7px;
+            background: #e7f5ef;
+        }
+
+        .tool-btn__mini-table,
+        .tool-btn__mini-table-stack {
+            width: 56px;
+            border-radius: 10px;
+            padding: 6px;
+            display: grid;
+            gap: 4px;
+        }
+
+        .tool-btn__mini-table {
+            height: 42px;
+        }
+
+        .tool-btn__mini-table-stack {
+            height: 56px;
+        }
+
+        .tool-btn__mini-table div,
+        .tool-btn__mini-table-stack div {
+            height: 5px;
+            border-radius: 999px;
+            background: #fbfcfb;
+            border: 1px solid #e2e7e4;
+        }
+
+        .tool-btn__mini-table div:nth-child(3),
+        .tool-btn__mini-table-stack div:nth-child(3),
+        .tool-btn__mini-table-stack div:nth-child(7) {
+            background: #eff8f3;
+            border-color: #b7d5c4;
+        }
+
+        .tool-btn__mini-button {
+            width: 58px;
+            height: 18px;
+            border-radius: 999px;
+            background: #008060;
+        }
+
+        .tool-btn__mini-badge {
+            width: 52px;
+            height: 16px;
+            border-radius: 999px;
+            background: #e8f0fb;
+        }
+
+        .tool-btn__mini-text {
+            font-size: 30px;
+            font-weight: 800;
+            color: #1f2a24;
+            line-height: 1;
+        }
+
+        .tool-btn:hover,
+        .tool-btn:focus-visible {
+            border-color: #9ecab8;
+            background: #f8fbf9;
+            outline: none;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+        }
+
+        .control-grid label,
+        .control-stack label {
+            display: grid;
+            gap: 0.35rem;
+            font-size: 0.85rem;
+            color: var(--play-muted);
+            font-weight: 700;
+        }
+
+        .control-grid input,
+        .control-stack input,
+        .control-stack select,
+        .control-stack textarea {
+            width: 100%;
+            border: 1px solid #cfd8d3;
+            border-radius: 10px;
+            padding: 0.65rem 0.75rem;
+            font: inherit;
+            color: var(--play-text);
+            box-sizing: border-box;
+        }
+
+        .control-stack {
+            display: grid;
+            gap: 0.65rem;
+        }
+
+        .swatches {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.55rem;
+        }
+
+        .swatches.two-up {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .swatch-picker-row {
+            display: grid;
+            grid-template-columns: 56px minmax(0, 1fr);
+            gap: 0.65rem;
+            align-items: center;
+            margin-top: 0.65rem;
+        }
+
+        .swatch-picker {
+            width: 56px;
+            height: 42px;
+            border: 1px solid var(--play-border);
+            border-radius: 12px;
+            background: #fff;
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        .swatch-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .swatch-picker::-webkit-color-swatch {
+            border: none;
+            border-radius: 8px;
+        }
+
+        .swatch-picker::-moz-color-swatch {
+            border: none;
+            border-radius: 8px;
+        }
+
+        .swatch-picker-label {
+            font-size: 0.82rem;
+            color: var(--play-muted);
+            font-weight: 700;
+        }
+
+        .swatch {
+            height: 42px;
+            cursor: pointer;
+        }
+
+        .swatch.selected {
+            box-shadow: inset 0 0 0 2px #1f2a24;
+        }
+
+        .swatch.swatch--light {
+            background-image: linear-gradient(135deg, rgba(31, 42, 36, 0.04), rgba(31, 42, 36, 0.01));
+        }
+
+        .sub-group-label {
+            margin: 0 0 0.45rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--play-muted);
+        }
+
+        .layers {
+            display: grid;
+            gap: 0.45rem;
+            max-height: 240px;
+            overflow: auto;
+        }
+
+        .layer-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.4rem;
+            align-items: stretch;
+        }
+
+        .layer-sort {
+            display: grid;
+            gap: 0.3rem;
+        }
+
+        .layer-sort button {
+            width: 32px;
+            border: 1px solid var(--play-border);
+            background: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            font: inherit;
+            color: var(--play-text);
+        }
+
+        .layer-sort button:disabled {
+            cursor: default;
+            opacity: 0.4;
+        }
+
+        .layer-btn {
+            width: 100%;
+            border: 1px solid var(--play-border);
+            background: #fff;
+            border-radius: 12px;
+            padding: 0.7rem 0.85rem;
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .layer-btn.active {
+            background: #eef7f2;
+            border-color: #9fc9b8;
+        }
+
+        .layer-btn.multi-active {
+            background: #eef4fb;
+            border-color: #9fbce6;
+        }
+
+        .canvas-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem 1.25rem 0;
+        }
+
+        .canvas-head h1 {
+            margin: 0;
+            font-size: 1.15rem;
+        }
+
+        .canvas-head p {
+            margin: 0.2rem 0 0;
+            color: var(--play-muted);
+            font-size: 0.92rem;
+        }
+
+        .canvas-actions {
+            display: flex;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+        }
+
+        .artboard-wrap {
+            padding: 1.25rem;
+        }
+
+        .artboard {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            min-height: 720px;
+            background:
+                linear-gradient(#edf2ef 1px, transparent 1px),
+                linear-gradient(90deg, #edf2ef 1px, transparent 1px),
+                #f9fbfa;
+            background-size: 32px 32px, 32px 32px, auto;
+            border-radius: 28px;
+            border: 1px solid #d6ddda;
+            overflow: hidden;
+        }
+
+        .canvas-item {
+            position: absolute;
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .canvas-item.selected {
+            outline: 3px solid rgba(44, 110, 203, 0.45);
+            outline-offset: 2px;
+        }
+
+        .canvas-item.dragging {
+            cursor: grabbing;
+            z-index: 50;
+        }
+
+        .selection-box {
+            position: absolute;
+            border: 1px solid rgba(44, 110, 203, 0.7);
+            background: rgba(44, 110, 203, 0.12);
+            border-radius: 14px;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        .resize-handle {
+            position: absolute;
+            right: -8px;
+            bottom: -8px;
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            background: #2c6ecb;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(31, 42, 36, 0.18);
+            cursor: nwse-resize;
+            z-index: 60;
+        }
+
+        .ui-card,
+        .ui-table,
+        .ui-filter,
+        .ui-button,
+        .ui-badge,
+        .ui-arrow,
+        .ui-text,
+        .ui-icon-widget,
+        .ui-circle,
+        .ui-square {
+            width: 100%;
+            height: 100%;
+        }
+
+        .mini-line,
+        .mini-pill,
+        .mini-chip {
+            position: absolute;
+            border-radius: 999px;
+        }
+
+        .ui-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid #d4dbd7;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+        }
+
+        .ui-table {
+            position: relative;
+            overflow: hidden;
+            border-radius: 22px;
+            border: 1px solid #d4dbd7;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+        }
+
+        .ui-table .header {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            top: 16px;
+            height: 24px;
+            background: #eef2f0;
+            border-radius: 12px;
+        }
+
+        .ui-table .row {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            height: 34px;
+            border-radius: 14px;
+            background: #fbfcfb;
+            border: 1px solid #e2e7e4;
+        }
+
+        .ui-filter {
+            border-radius: 18px;
+            border: 1px solid #d4dbd7;
+            background: #fff;
+            box-shadow: 0 8px 18px rgba(31, 42, 36, 0.08);
+        }
+
+        .ui-button {
+            border-radius: 999px;
+            box-shadow: 0 8px 18px rgba(31, 42, 36, 0.1);
+        }
+
+        .ui-badge {
+            border-radius: 999px;
+            border: 1px solid rgba(31, 42, 36, 0.08);
+        }
+
+        .ui-arrow {
+            overflow: visible;
+        }
+
+        .ui-text {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--play-text);
+            padding: 0 0.15rem;
+            box-sizing: border-box;
+        }
+
+        .ui-icon-widget {
+            border-radius: 22px;
+            border: 1px solid #d4dbd7;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+            display: grid;
+            place-items: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .ui-row-stack {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ui-row-stack__row {
+            position: absolute;
+            left: 0;
+            right: 0;
+            border-radius: 22px;
+            border: 1px solid #d4dbd7;
+            background: #dfe4e1;
+            box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+            cursor: pointer;
+        }
+
+        .ui-row-stack__row.is-selected {
+            box-shadow: 0 0 0 2px rgba(44, 110, 203, 0.28), 0 10px 20px rgba(31, 42, 36, 0.08);
+            border-color: rgba(44, 110, 203, 0.5);
+        }
+
+        .ui-icon-widget svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ui-circle,
+        .ui-square {
+            box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+            border: 1px solid rgba(31, 42, 36, 0.08);
+        }
+
+        .ui-circle {
+            border-radius: 999px;
+        }
+
+        .ui-square {
+            border-radius: 20px;
+        }
+
+        .toolbar-divider {
+            grid-column: 1 / -1;
+            height: 1px;
+            background: #e8edea;
+            margin: 0.1rem 0;
+        }
+
+        .export-box {
+            padding: 0.75rem;
+            font-family: Consolas, 'SFMono-Regular', monospace;
+            font-size: 0.8rem;
+            color: #35534a;
+            background: #f8fbf9;
+            max-height: 180px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .help-note {
+            font-size: 0.82rem;
+            color: var(--play-muted);
+            line-height: 1.5;
+        }
+
+        .help-note.export-status {
+            min-height: 1.35rem;
+            margin: 0;
+        }
+
+        @media (max-width: 1100px) {
+            .playground-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .playground-panel {
+                position: static;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .tool-grid,
+            .control-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .artboard {
+                min-height: 520px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="/" class="brand-logo" aria-label="Commerce Dash home">
+                <img src="../media/logo-horizontal.jpg" alt="Commerce Dash" class="brand-logo-image">
+                <span class="catalog-tagline">/ catalogIQ</span>
+            </a>
+            <nav class="main-nav" aria-label="Main Navigation">
+                <ul>
+                    <li><a href="index.html">Overview</a></li>
+                    <li><a href="compare.html">Compare</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="playground-shell">
+        <aside class="playground-panel">
+            <h1 class="panel-title">Illustration Playground</h1>
+            <p class="panel-copy">Add UI blocks, icons, arrows, and badges. Drag them on the artboard, shift-click to multi-select, then align and distribute with exact controls.</p>
+
+            <section class="tool-group">
+                <h2>Text & Color</h2>
+                <div class="control-stack">
+                    <label>Text Content
+                        <textarea id="prop-text" rows="3" placeholder="Enter widget text"></textarea>
+                    </label>
+                </div>
+                <div style="margin-top:0.85rem;">
+                    <p class="sub-group-label">Surface Color</p>
+                    <div class="swatches" id="swatches"></div>
+                    <div class="swatch-picker-row">
+                        <input id="surface-color-picker" class="swatch-picker" type="color" value="#ffffff" aria-label="Choose custom surface color">
+                        <div class="swatch-picker-label" id="surface-color-value">Custom surface color</div>
+                    </div>
+                </div>
+                <div style="margin-top:0.85rem;">
+                    <p class="sub-group-label">Text / Icon Color</p>
+                    <div class="swatches two-up" id="foreground-swatches"></div>
+                </div>
+            </section>
+
+            <section class="tool-group">
+                <h2>Add Elements</h2>
+                <div class="tool-grid">
+                    <button class="tool-btn" type="button" data-add="table">Table</button>
+                    <button class="tool-btn" type="button" data-add="table-stack">Tall Table</button>
+                    <button class="tool-btn" type="button" data-add="table-stack-rows">Row Stack</button>
+                    <button class="tool-btn" type="button" data-add="card">Card</button>
+                    <button class="tool-btn" type="button" data-add="filter">Filter</button>
+                    <button class="tool-btn" type="button" data-add="circle">Circle</button>
+                    <button class="tool-btn" type="button" data-add="square">Square</button>
+                    <button class="tool-btn" type="button" data-add="button">Button</button>
+                    <button class="tool-btn" type="button" data-add="badge">Badge</button>
+                    <button class="tool-btn" type="button" data-add="arrow">Arrow</button>
+                    <button class="tool-btn" type="button" data-add="text">Text</button>
+                    <button class="tool-btn" type="button" data-add="text-lines">Thin Lines</button>
+                    <button class="tool-btn" type="button" data-add="text-squiggles">Squiggles</button>
+                </div>
+                <div class="toolbar-divider" aria-hidden="true"></div>
+                <div class="tool-grid four-up icon-grid">
+                    <button class="tool-btn" type="button" data-add="icon-apparel">Apparel</button>
+                    <button class="tool-btn" type="button" data-add="icon-tech">Tech</button>
+                    <button class="tool-btn" type="button" data-add="icon-beauty">Beauty</button>
+                    <button class="tool-btn" type="button" data-add="icon-home">Home</button>
+                    <button class="tool-btn" type="button" data-add="icon-shoe">Shoe</button>
+                    <button class="tool-btn" type="button" data-add="icon-glasses">Glasses</button>
+                    <button class="tool-btn" type="button" data-add="icon-hat">Hat</button>
+                    <button class="tool-btn" type="button" data-add="icon-ball">Ball</button>
+                    <button class="tool-btn" type="button" data-add="icon-bag">Bag</button>
+                    <button class="tool-btn" type="button" data-add="icon-watch">Watch</button>
+                    <button class="tool-btn" type="button" data-add="icon-gift">Gift</button>
+                    <button class="tool-btn" type="button" data-add="icon-cart">Cart</button>
+                    <button class="tool-btn" type="button" data-add="icon-checkbox-checked">Checked Box</button>
+                    <button class="tool-btn" type="button" data-add="icon-checkbox-unchecked">Empty Box</button>
+                </div>
+            </section>
+
+            <section class="tool-group">
+                <h2>Align Selection</h2>
+                <div class="tool-grid three-up">
+                    <button class="tool-btn" type="button" data-align="left">Left</button>
+                    <button class="tool-btn" type="button" data-align="hcenter">Center</button>
+                    <button class="tool-btn" type="button" data-align="right">Right</button>
+                    <button class="tool-btn" type="button" data-align="top">Top</button>
+                    <button class="tool-btn" type="button" data-align="vmiddle">Middle</button>
+                    <button class="tool-btn" type="button" data-align="bottom">Bottom</button>
+                    <button class="tool-btn" type="button" data-align="distribute-h">Distribute X</button>
+                    <button class="tool-btn" type="button" data-align="distribute-v">Distribute Y</button>
+                </div>
+            </section>
+
+            <section class="tool-group">
+                <h2>Selected Element</h2>
+                <div class="control-grid">
+                    <label>X
+                        <input id="prop-x" type="number" step="1">
+                    </label>
+                    <label>Y
+                        <input id="prop-y" type="number" step="1">
+                    </label>
+                    <label>Width
+                        <input id="prop-width" type="number" step="1">
+                    </label>
+                    <label>Height
+                        <input id="prop-height" type="number" step="1">
+                    </label>
+                    <label>Radius
+                        <input id="prop-radius" type="number" step="1">
+                    </label>
+                    <label>Opacity
+                        <input id="prop-opacity" type="number" step="0.05" min="0.1" max="1">
+                    </label>
+                    <label>Font Size
+                        <input id="prop-font-size" type="number" step="1">
+                    </label>
+                </div>
+            </section>
+
+            <section class="tool-group">
+                <h2>Layers</h2>
+                <div class="layers" id="layers"></div>
+            </section>
+
+            <section class="tool-group control-stack">
+                <h2>Export</h2>
+                <label>Largest Side Output (px)
+                    <input id="export-max-side" type="number" min="256" max="4096" step="64" value="1600">
+                </label>
+                <div class="tool-grid">
+                    <button class="tool-btn" type="button" id="open-svg-tab">Open SVG Tab</button>
+                    <button class="tool-btn" type="button" id="download-svg">Download SVG</button>
+                    <button class="tool-btn" type="button" id="open-png-tab">Open PNG Tab</button>
+                    <button class="tool-btn" type="button" id="download-png">Download PNG</button>
+                </div>
+                <button class="tool-btn" type="button" id="copy-layout">Copy JSON Layout</button>
+                <div class="export-box" id="export-box"></div>
+                <p class="help-note">The JSON below is the editable layout state for this tool. Use it to restore, duplicate, or hand off the composition. Use the export buttons above when you need an actual SVG or PNG file.</p>
+                <p class="help-note export-status" id="export-status"></p>
+            </section>
+        </aside>
+
+        <section class="playground-canvas-wrap">
+            <div class="canvas-head">
+                <div>
+                    <h1>Interactive Artboard</h1>
+                    <p>Click an item to edit it. Drag items directly, or drag across empty canvas space to multi-select. The layout export updates automatically.</p>
+                </div>
+                <div class="canvas-actions">
+                    <button class="tool-btn" type="button" id="reset-layout">Reset</button>
+                    <button class="tool-btn" type="button" id="delete-item">Delete Selected</button>
+                </div>
+            </div>
+            <div class="artboard-wrap">
+                <div class="artboard" id="artboard" aria-label="Illustration artboard"></div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const palette = [
+            '#FFFFFF',
+            '#F7F9F8',
+            '#EEF2F0',
+            '#E7F5EF',
+            '#F9C7D3',
+            '#F38A61',
+            '#7A3DB8',
+            '#5A2CA0',
+            '#008060',
+            '#2C6ECB',
+            '#E8F0FB',
+            '#6D7175'
+        ];
+        const foregroundPalette = ['#1F2A24', '#FFFFFF'];
+        const alignButtons = document.querySelectorAll('[data-align]');
+
+        const presets = {
+            table: { type: 'table', x: 360, y: 170, width: 420, height: 250, radius: 22, opacity: 1, color: '#FFFFFF' },
+            'table-stack': { type: 'table-stack', x: 360, y: 180, width: 420, height: 320, radius: 22, opacity: 1, color: '#FFFFFF', foregroundColor: '#1F2A24' },
+            'table-stack-rows': { type: 'table-stack-rows', x: 120, y: 170, width: 520, height: 316, radius: 22, opacity: 1, color: 'transparent', foregroundColor: '#1F2A24', rowColors: ['#dfe4e1', '#dfe4e1', '#dfe4e1'] },
+            card: { type: 'card', x: 140, y: 170, width: 170, height: 130, radius: 20, opacity: 1, color: '#FFFFFF' },
+            filter: { type: 'filter', x: 120, y: 340, width: 180, height: 110, radius: 18, opacity: 1, color: '#FFFFFF' },
+            circle: { type: 'circle', x: 150, y: 600, width: 88, height: 88, radius: 999, opacity: 1, color: '#E7F5EF' },
+            square: { type: 'square', x: 260, y: 600, width: 96, height: 96, radius: 20, opacity: 1, color: '#E8F0FB' },
+            button: { type: 'button', x: 820, y: 170, width: 150, height: 44, radius: 999, opacity: 1, color: '#008060' },
+            badge: { type: 'badge', x: 820, y: 250, width: 120, height: 34, radius: 999, opacity: 1, color: '#E8F0FB' },
+            arrow: { type: 'arrow', x: 300, y: 250, width: 140, height: 32, radius: 0, opacity: 1, color: '#2C6ECB' },
+            text: { type: 'text', x: 140, y: 510, width: 250, height: 42, radius: 0, opacity: 1, color: 'transparent', foregroundColor: '#1F2A24', text: 'Bulk metafield edits', fontSize: 28 },
+            'text-lines': { type: 'text-lines', x: 690, y: 170, width: 220, height: 116, radius: 0, opacity: 1, color: 'transparent', foregroundColor: '#1F2A24' },
+            'text-squiggles': { type: 'text-squiggles', x: 690, y: 320, width: 220, height: 108, radius: 0, opacity: 1, color: 'transparent', foregroundColor: '#1F2A24' },
+            'icon-apparel': { type: 'icon', x: 820, y: 320, width: 92, height: 92, radius: 22, opacity: 1, color: '#E7F5EF', foregroundColor: '#1F2A24', iconName: 'apparel' },
+            'icon-tech': { type: 'icon', x: 930, y: 320, width: 92, height: 92, radius: 22, opacity: 1, color: '#E8F0FB', foregroundColor: '#1F2A24', iconName: 'tech' },
+            'icon-beauty': { type: 'icon', x: 820, y: 430, width: 92, height: 92, radius: 22, opacity: 1, color: '#F7F9F8', foregroundColor: '#1F2A24', iconName: 'beauty' },
+            'icon-home': { type: 'icon', x: 930, y: 430, width: 92, height: 92, radius: 22, opacity: 1, color: '#EEF2F0', foregroundColor: '#1F2A24', iconName: 'home' },
+            'icon-shoe': { type: 'icon', x: 1040, y: 320, width: 92, height: 92, radius: 22, opacity: 1, color: '#EEF2F0', foregroundColor: '#1F2A24', iconName: 'shoe' },
+            'icon-glasses': { type: 'icon', x: 1040, y: 430, width: 92, height: 92, radius: 22, opacity: 1, color: '#E8F0FB', foregroundColor: '#1F2A24', iconName: 'glasses' },
+            'icon-hat': { type: 'icon', x: 820, y: 540, width: 92, height: 92, radius: 22, opacity: 1, color: '#F7F9F8', foregroundColor: '#1F2A24', iconName: 'hat' },
+            'icon-ball': { type: 'icon', x: 930, y: 540, width: 92, height: 92, radius: 22, opacity: 1, color: '#E7F5EF', foregroundColor: '#1F2A24', iconName: 'ball' },
+            'icon-bag': { type: 'icon', x: 1040, y: 540, width: 92, height: 92, radius: 22, opacity: 1, color: '#EEF2F0', foregroundColor: '#1F2A24', iconName: 'bag' },
+            'icon-watch': { type: 'icon', x: 820, y: 650, width: 92, height: 92, radius: 22, opacity: 1, color: '#E8F0FB', foregroundColor: '#1F2A24', iconName: 'watch' },
+            'icon-gift': { type: 'icon', x: 930, y: 650, width: 92, height: 92, radius: 22, opacity: 1, color: '#F7F9F8', foregroundColor: '#1F2A24', iconName: 'gift' },
+            'icon-cart': { type: 'icon', x: 1040, y: 650, width: 92, height: 92, radius: 22, opacity: 1, color: '#E7F5EF', foregroundColor: '#1F2A24', iconName: 'cart' },
+            'icon-checkbox-checked': { type: 'icon', x: 1140, y: 320, width: 92, height: 92, radius: 22, opacity: 1, color: '#E7F5EF', foregroundColor: '#1F2A24', iconName: 'checkbox-checked' },
+            'icon-checkbox-unchecked': { type: 'icon', x: 1140, y: 430, width: 92, height: 92, radius: 22, opacity: 1, color: '#F7F9F8', foregroundColor: '#1F2A24', iconName: 'checkbox-unchecked' }
+        };
+
+        const starterLayout = [
+            { id: 'item-1', ...presets.card },
+            { id: 'item-2', ...presets.filter, y: 330 },
+            { id: 'item-3', ...presets.table },
+            { id: 'item-4', ...presets.button },
+            { id: 'item-5', ...presets.badge },
+            { id: 'item-6', ...presets.arrow },
+            { id: 'item-7', ...presets.text },
+            { id: 'item-8', ...presets['icon-apparel'] },
+            { id: 'item-9', ...presets['icon-tech'] }
+        ];
+
+        const artboard = document.getElementById('artboard');
+        const layers = document.getElementById('layers');
+        const exportBox = document.getElementById('export-box');
+        const exportMaxSideInput = document.getElementById('export-max-side');
+        const exportStatus = document.getElementById('export-status');
+        const swatches = document.getElementById('swatches');
+        const surfaceColorPicker = document.getElementById('surface-color-picker');
+        const surfaceColorValue = document.getElementById('surface-color-value');
+        const foregroundSwatches = document.getElementById('foreground-swatches');
+        const addButtons = document.querySelectorAll('[data-add]');
+        const EXPORT_FONT_SOURCES = [
+            {
+                family: 'Nunito Sans',
+                style: 'normal',
+                url: '../media/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf'
+            },
+            {
+                family: 'Nunito Sans',
+                style: 'italic',
+                url: '../media/NunitoSans-Italic-VariableFont_YTLC,opsz,wdth,wght.ttf'
+            }
+        ];
+        const propInputs = {
+            x: document.getElementById('prop-x'),
+            y: document.getElementById('prop-y'),
+            width: document.getElementById('prop-width'),
+            height: document.getElementById('prop-height'),
+            radius: document.getElementById('prop-radius'),
+            opacity: document.getElementById('prop-opacity'),
+            fontSize: document.getElementById('prop-font-size')
+        };
+        const propText = document.getElementById('prop-text');
+        let exportFontCssPromise = null;
+        const EXPORT_SVG_STYLES = `
+            :root {
+                --play-text: #1f2a24;
+            }
+            * { box-sizing: border-box; }
+            body {
+                margin: 0;
+                background: transparent;
+                color: var(--play-text);
+                font-family: 'Nunito Sans', 'Segoe UI', sans-serif;
+            }
+            .artboard {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                min-height: 0;
+                background:
+                    linear-gradient(#edf2ef 1px, transparent 1px),
+                    linear-gradient(90deg, #edf2ef 1px, transparent 1px),
+                    #f9fbfa;
+                background-size: 32px 32px, 32px 32px, auto;
+                border-radius: 28px;
+                border: 1px solid #d6ddda;
+                overflow: hidden;
+            }
+            .canvas-item {
+                position: absolute;
+            }
+            .ui-card,
+            .ui-table,
+            .ui-filter,
+            .ui-button,
+            .ui-badge,
+            .ui-arrow,
+            .ui-text,
+            .ui-icon-widget,
+            .ui-circle,
+            .ui-square {
+                width: 100%;
+                height: 100%;
+            }
+            .mini-line,
+            .mini-pill,
+            .mini-chip {
+                position: absolute;
+                border-radius: 999px;
+            }
+            .ui-card {
+                position: relative;
+                overflow: hidden;
+                border-radius: 20px;
+                border: 1px solid #d4dbd7;
+                background: #fff;
+                box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+            }
+            .ui-table {
+                position: relative;
+                overflow: hidden;
+                border-radius: 22px;
+                border: 1px solid #d4dbd7;
+                background: #fff;
+                box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+            }
+            .ui-table .header {
+                position: absolute;
+                left: 16px;
+                right: 16px;
+                top: 16px;
+                height: 24px;
+                background: #eef2f0;
+                border-radius: 12px;
+            }
+            .ui-table .row {
+                position: absolute;
+                left: 16px;
+                right: 16px;
+                height: 34px;
+                border-radius: 14px;
+                background: #fbfcfb;
+                border: 1px solid #e2e7e4;
+            }
+            .ui-filter {
+                border-radius: 18px;
+                border: 1px solid #d4dbd7;
+                background: #fff;
+                box-shadow: 0 8px 18px rgba(31, 42, 36, 0.08);
+            }
+            .ui-button {
+                border-radius: 999px;
+                box-shadow: 0 8px 18px rgba(31, 42, 36, 0.1);
+            }
+            .ui-badge {
+                border-radius: 999px;
+                border: 1px solid rgba(31, 42, 36, 0.08);
+            }
+            .ui-arrow {
+                overflow: visible;
+            }
+            .ui-text {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                font-weight: 800;
+                line-height: 1.15;
+                letter-spacing: -0.02em;
+                color: var(--play-text);
+                font-family: inherit;
+                padding: 0 0.15rem;
+            }
+            .ui-icon-widget {
+                border-radius: 22px;
+                border: 1px solid #d4dbd7;
+                background: #fff;
+                box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+                display: grid;
+                place-items: center;
+                padding: 0;
+            }
+            .ui-icon-widget svg {
+                width: 100%;
+                height: 100%;
+            }
+            .ui-row-stack {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+            .ui-row-stack__row {
+                position: absolute;
+                left: 0;
+                right: 0;
+                border-radius: 22px;
+                border: 1px solid #d4dbd7;
+                background: #dfe4e1;
+                box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+            }
+            .ui-row-stack__row.is-selected {
+                box-shadow: 0 0 0 2px rgba(44, 110, 203, 0.28), 0 10px 20px rgba(31, 42, 36, 0.08);
+                border-color: rgba(44, 110, 203, 0.5);
+            }
+            .ui-circle,
+            .ui-square {
+                box-shadow: 0 10px 20px rgba(31, 42, 36, 0.08);
+                border: 1px solid rgba(31, 42, 36, 0.08);
+            }
+            .ui-circle {
+                border-radius: 999px;
+            }
+            .ui-square {
+                border-radius: 20px;
+            }
+        `;
+
+        function ensureDefaults(item) {
+            if ((item.type === 'icon' || item.type === 'text' || item.type === 'table-stack' || item.type === 'text-lines' || item.type === 'text-squiggles') && !item.foregroundColor) {
+                item.foregroundColor = '#1F2A24';
+            }
+            if (item.type === 'table-stack-rows' && !Array.isArray(item.rowColors)) {
+                item.rowColors = ['#dfe4e1', '#dfe4e1', '#dfe4e1'];
+            }
+            if (item.type === 'text' && !item.color) {
+                item.color = 'transparent';
+            }
+            return item;
+        }
+
+        let items = JSON.parse(JSON.stringify(starterLayout)).map(ensureDefaults);
+        let selectedIds = [items[0].id];
+        let dragState = null;
+        let resizeState = null;
+        let marqueeState = null;
+        let copiedItems = [];
+
+        function isRowSelectionId(value) {
+            return typeof value === 'string' && value.startsWith('row:');
+        }
+
+        function createRowSelectionId(itemId, rowIndex) {
+            return `row:${itemId}:${rowIndex}`;
+        }
+
+        function parseRowSelectionId(value) {
+            if (!isRowSelectionId(value)) return null;
+            const [, itemId, rowIndex] = value.split(':');
+            const parsedIndex = Number(rowIndex);
+            if (!itemId || !Number.isInteger(parsedIndex)) return null;
+            return { itemId, rowIndex: parsedIndex };
+        }
+
+        function selectedItem() {
+            if (selectedIds.length !== 1 || isRowSelectionId(selectedIds[0])) return null;
+            return items.find((item) => item.id === selectedIds[0]) || null;
+        }
+
+        function selectedItems() {
+            return items.filter((item) => selectedIds.includes(item.id));
+        }
+
+        function getSelectedRowTargets() {
+            return selectedIds
+                .map(parseRowSelectionId)
+                .filter(Boolean)
+                .map((entry) => {
+                    const item = items.find((candidate) => candidate.id === entry.itemId && candidate.type === 'table-stack-rows');
+                    if (!item) return null;
+                    const rows = getRowStackRows(item);
+                    const row = rows[entry.rowIndex];
+                    if (!row) return null;
+                    return {
+                        type: 'row',
+                        item,
+                        rowIndex: entry.rowIndex,
+                        color: row.color,
+                        setColor(nextColor) {
+                            if (!Array.isArray(item.rowColors)) item.rowColors = [];
+                            item.rowColors[entry.rowIndex] = nextColor;
+                        }
+                    };
+                })
+                .filter(Boolean);
+        }
+
+        function getSelectedSurfaceTargets() {
+            return [
+                ...selectedItems().map((item) => ({
+                    type: 'item',
+                    item,
+                    color: item.color,
+                    setColor(nextColor) {
+                        item.color = nextColor;
+                    }
+                })),
+                ...getSelectedRowTargets(),
+            ];
+        }
+
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        function normalizeColorToken(color, fallback = '#ffffff') {
+            if (typeof color !== 'string' || !color.trim()) return fallback;
+            const trimmed = color.trim().toLowerCase();
+            if (/^#[0-9a-f]{6}$/i.test(trimmed)) return trimmed;
+            return fallback;
+        }
+
+        function nextId() {
+            return `item-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+        }
+
+        function getArtboardPoint(clientX, clientY) {
+            const rect = artboard.getBoundingClientRect();
+            return {
+                x: clamp(clientX - rect.left, 0, rect.width),
+                y: clamp(clientY - rect.top, 0, rect.height)
+            };
+        }
+
+        function getRectFromPoints(startX, startY, currentX, currentY) {
+            const left = Math.min(startX, currentX);
+            const top = Math.min(startY, currentY);
+            const width = Math.abs(currentX - startX);
+            const height = Math.abs(currentY - startY);
+            return {
+                left,
+                top,
+                width,
+                height,
+                right: left + width,
+                bottom: top + height,
+            };
+        }
+
+        function rectsIntersect(a, b) {
+            return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+        }
+
+        function getTableStackRows(item) {
+            const usableTop = 22;
+            const headerHeight = 26;
+            const rowHeight = 34;
+            const rowGap = 12;
+            const bottomPadding = 18;
+            const availableHeight = item.height - usableTop - headerHeight - bottomPadding;
+            const maxRows = Math.max(2, Math.floor((availableHeight + rowGap) / (rowHeight + rowGap)));
+            return Array.from({ length: maxRows }, (_, index) => ({
+                top: usableTop + headerHeight + 18 + index * (rowHeight + rowGap),
+                active: index % 4 === 2,
+            }));
+        }
+
+        function getRowStackRows(item) {
+            const rowHeight = 92;
+            const rowGap = 20;
+            const count = Math.max(1, Math.floor((item.height + rowGap) / (rowHeight + rowGap)));
+            if (!Array.isArray(item.rowColors)) item.rowColors = [];
+            while (item.rowColors.length < count) {
+                item.rowColors.push('#dfe4e1');
+            }
+            if (item.rowColors.length > count) {
+                item.rowColors = item.rowColors.slice(0, count);
+            }
+            return Array.from({ length: count }, (_, index) => ({
+                top: index * (rowHeight + rowGap),
+                height: rowHeight,
+                color: item.rowColors[index] || '#dfe4e1',
+                selected: selectedIds.includes(createRowSelectionId(item.id, index)),
+            }));
+        }
+
+        function getPlaceholderGroups(item, linesPerGroup) {
+            const lineHeight = 4;
+            const lineGap = 8;
+            const groupGap = 18;
+            const groupHeight = linesPerGroup * lineHeight + (linesPerGroup - 1) * lineGap;
+            const count = Math.max(1, Math.floor((item.height + groupGap) / (groupHeight + groupGap)));
+            return Array.from({ length: count }, (_, index) => ({
+                top: index * (groupHeight + groupGap),
+                lineHeight,
+                lineGap,
+            }));
+        }
+
+        function buildSquigglePath(width, baselineY, amplitude, step) {
+            let path = `M 0 ${baselineY}`;
+            for (let x = 0; x < width; x += step * 2) {
+                const cp1x = x + step * 0.5;
+                const cp2x = x + step * 1.5;
+                const endX = Math.min(width, x + step * 2);
+                path += ` C ${cp1x} ${baselineY - amplitude}, ${cp2x} ${baselineY + amplitude}, ${endX} ${baselineY}`;
+            }
+            return path;
+        }
+
+        function isPlaceholderItem(item) {
+            return item?.type === 'text-lines' || item?.type === 'text-squiggles';
+        }
+
+        function findClosestRowStackTarget(item) {
+            const centerX = item.x + item.width / 2;
+            const centerY = item.y + item.height / 2;
+            let bestMatch = null;
+
+            items.forEach((candidate) => {
+                if (candidate.id === item.id || candidate.type !== 'table-stack-rows') return;
+                getRowStackRows(candidate).forEach((row, rowIndex) => {
+                    const rect = {
+                        x: candidate.x,
+                        y: candidate.y + row.top,
+                        width: candidate.width,
+                        height: row.height,
+                    };
+                    const dx = centerX < rect.x ? rect.x - centerX : centerX > rect.x + rect.width ? centerX - (rect.x + rect.width) : 0;
+                    const dy = centerY < rect.y ? rect.y - centerY : centerY > rect.y + rect.height ? centerY - (rect.y + rect.height) : 0;
+                    const distance = Math.hypot(dx, dy);
+                    if (distance > 72) return;
+                    if (!bestMatch || distance < bestMatch.distance) {
+                        bestMatch = { candidate, row, rowIndex, rect, distance };
+                    }
+                });
+            });
+
+            return bestMatch;
+        }
+
+        function snapPlaceholdersToRowStacks() {
+            const targets = selectedItems().filter(isPlaceholderItem);
+            let changed = false;
+
+            targets.forEach((item) => {
+                const match = findClosestRowStackTarget(item);
+                if (!match) return;
+                const horizontalInset = 24;
+                const verticalInset = 12;
+                const nextWidth = Math.max(72, match.rect.width - horizontalInset * 2);
+                const nextHeight = Math.max(28, match.rect.height - verticalInset * 2);
+                const nextX = clamp(match.rect.x + horizontalInset, 0, Math.max(0, artboard.clientWidth - nextWidth));
+                const nextY = clamp(match.rect.y + Math.round((match.rect.height - nextHeight) / 2), 0, Math.max(0, artboard.clientHeight - nextHeight));
+
+                if (item.x !== nextX || item.y !== nextY || item.width !== nextWidth || item.height !== nextHeight) {
+                    item.x = nextX;
+                    item.y = nextY;
+                    item.width = nextWidth;
+                    item.height = nextHeight;
+                    changed = true;
+                }
+            });
+
+            return changed;
+        }
+
+        function blobToDataUrl(blob) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = () => reject(reader.error || new Error('Failed to read font data.'));
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        async function getExportFontCss() {
+            if (!exportFontCssPromise) {
+                exportFontCssPromise = (async () => {
+                    const rules = [];
+                    for (const source of EXPORT_FONT_SOURCES) {
+                        const response = await fetch(new URL(source.url, window.location.href));
+                        if (!response.ok) {
+                            throw new Error(`Unable to load export font: ${source.family}`);
+                        }
+                        const dataUrl = await blobToDataUrl(await response.blob());
+                        rules.push(`@font-face { font-family: '${source.family}'; src: url('${dataUrl}') format('truetype'); font-weight: 200 900; font-style: ${source.style}; font-display: swap; }`);
+                    }
+                    return rules.join('\n');
+                })().catch(() => '');
+            }
+
+            return exportFontCssPromise;
+        }
+
+        const addButtonLabels = {
+            table: 'Table',
+            'table-stack': 'Tall Table',
+            'table-stack-rows': 'Row Stack',
+            card: 'Card',
+            filter: 'Filter',
+            circle: 'Circle',
+            square: 'Square',
+            button: 'Button',
+            badge: 'Badge',
+            arrow: 'Arrow',
+            text: 'Text',
+            'text-lines': 'Thin Lines',
+            'text-squiggles': 'Squiggles',
+            'icon-apparel': 'Apparel',
+            'icon-tech': 'Tech',
+            'icon-beauty': 'Beauty',
+            'icon-home': 'Home',
+            'icon-shoe': 'Shoe',
+            'icon-glasses': 'Glasses',
+            'icon-hat': 'Hat',
+            'icon-ball': 'Ball',
+            'icon-bag': 'Bag',
+            'icon-watch': 'Watch',
+            'icon-gift': 'Gift',
+            'icon-cart': 'Cart',
+            'icon-checkbox-checked': 'Checked Box',
+            'icon-checkbox-unchecked': 'Empty Box',
+        };
+
+        function getAddButtonMarkup(type) {
+            if (type === 'table') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-table"><div></div><div></div><div></div><div></div></span></span>';
+            }
+            if (type === 'table-stack') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-table-stack"><div></div><div></div><div></div><div></div><div></div><div></div><div></div></span></span>';
+            }
+            if (type === 'table-stack-rows') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-table-stack"><div></div><div></div><div></div></span></span>';
+            }
+            if (type === 'card') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-card"></span></span>';
+            }
+            if (type === 'filter') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-filter"></span></span>';
+            }
+            if (type === 'circle') {
+                return '<span class="tool-btn__preview"><span style="width:48px;height:48px;border-radius:999px;background:#e7f5ef;border:1px solid rgba(31,42,36,0.08);"></span></span>';
+            }
+            if (type === 'square') {
+                return '<span class="tool-btn__preview"><span style="width:48px;height:48px;border-radius:12px;background:#e8f0fb;border:1px solid rgba(31,42,36,0.08);"></span></span>';
+            }
+            if (type === 'button') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-button"></span></span>';
+            }
+            if (type === 'badge') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-badge"></span></span>';
+            }
+            if (type === 'text') {
+                return '<span class="tool-btn__preview"><span class="tool-btn__mini-text">T</span></span>';
+            }
+            if (type === 'text-lines') {
+                return '<span class="tool-btn__preview"><span style="display:grid;gap:5px;width:60px;"><span style="height:3px;border-radius:999px;background:#1F2A24;width:100%;"></span><span style="height:3px;border-radius:999px;background:#1F2A24;width:92%;"></span><span style="height:3px;border-radius:999px;background:#1F2A24;width:78%;"></span><span style="height:3px;border-radius:999px;background:#1F2A24;width:88%;"></span></span></span>';
+            }
+            if (type === 'text-squiggles') {
+                return '<span class="tool-btn__preview"><svg viewBox="0 0 68 30" width="60" height="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 6C8 1 14 11 20 6S32 1 38 6S50 11 56 6S62 1 66 6" fill="none" stroke="#1F2A24" stroke-width="2.5" stroke-linecap="round"/><path d="M2 15C8 10 14 20 20 15S32 10 38 15S50 20 56 15S62 10 66 15" fill="none" stroke="#1F2A24" stroke-width="2.5" stroke-linecap="round"/><path d="M2 24C8 19 14 29 20 24S32 19 38 24S50 29 56 24S62 19 66 24" fill="none" stroke="#1F2A24" stroke-width="2.5" stroke-linecap="round"/></svg></span>';
+            }
+            if (type === 'arrow') {
+                const preset = presets[type];
+                return `<span class="tool-btn__preview"><svg viewBox="0 0 64 28" width="58" height="28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 14H46" stroke="${preset.color}" stroke-width="4" stroke-linecap="round"/><path d="M38 6L52 14L38 22" fill="none" stroke="${preset.color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`;
+            }
+            const preset = presets[type];
+            if (preset?.type === 'icon') {
+                return `<span class="tool-btn__preview"><div class="ui-icon-widget" style="width:56px;height:56px;padding:8px;background:${preset.color};border-radius:14px;box-shadow:none;">${iconMarkup(preset)}</div></span>`;
+            }
+            return `<span class="tool-btn__preview"><span>${addButtonLabels[type] || type}</span></span>`;
+        }
+
+        function iconMarkup(item) {
+            const stroke = item.foregroundColor || '#1F2A24';
+            const fill = item.foregroundColor || '#1F2A24';
+
+            if (item.iconName === 'apparel') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M22 14L32 20L42 14L50 22L44 30V52H20V30L14 22L22 14Z" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/>
+                        <path d="M27 18C28.5 22 35.5 22 37 18" fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'tech') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="16" y="10" width="32" height="44" rx="7" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <rect x="23" y="18" width="18" height="22" rx="3" fill="${fill}" opacity="0.16"/>
+                        <circle cx="32" cy="46" r="2.5" fill="${stroke}"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'beauty') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M28 12H36V24H40V52H24V24H28V12Z" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/>
+                        <rect x="28" y="28" width="8" height="16" rx="3" fill="${fill}" opacity="0.18"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'shoe') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M14 38C22 38 24 28 30 28C34 28 36 38 46 38C50 38 52 42 52 46V50H12V44C12 40 13 38 14 38Z" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/>
+                        <path d="M26 34H34" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'glasses') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="22" cy="34" r="10" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <circle cx="42" cy="34" r="10" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M12 30L8 24" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M52 30L56 24" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M32 34H32.01" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'hat') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M18 32C18 22 24 16 32 16C40 16 46 22 46 32" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M10 34C16 30 48 30 54 34C52 40 12 40 10 34Z" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'ball') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="32" cy="32" r="18" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M32 14C36 20 36 44 32 50" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M14 32H50" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'bag') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M18 24H46L44 50H20L18 24Z" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/>
+                        <path d="M24 24C24 18 27 14 32 14C37 14 40 18 40 24" fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'watch') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="26" y="8" width="12" height="10" rx="4" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <rect x="22" y="18" width="20" height="28" rx="10" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <rect x="26" y="46" width="12" height="10" rx="4" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M32 24V32L37 35" stroke="${stroke}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'gift') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="14" y="26" width="36" height="24" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M32 26V50" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M14 34H50" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M32 26C28 26 22 24 22 20C22 17 24 15 27 15C30 15 32 18 32 22" fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M32 26C36 26 42 24 42 20C42 17 40 15 37 15C34 15 32 18 32 22" fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'cart') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M12 16H18L22 38H46L50 22H24" fill="none" stroke="${stroke}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="26" cy="48" r="3" fill="${stroke}"/>
+                        <circle cx="42" cy="48" r="3" fill="${stroke}"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'checkbox-checked') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="14" y="14" width="36" height="36" rx="8" fill="none" stroke="${stroke}" stroke-width="4"/>
+                        <path d="M22 33L29 40L42 25" fill="none" stroke="${stroke}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>`;
+            }
+            if (item.iconName === 'checkbox-unchecked') {
+                return `
+                    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="14" y="14" width="36" height="36" rx="8" fill="none" stroke="${stroke}" stroke-width="4"/>
+                    </svg>`;
+            }
+            return `
+                <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M18 28L32 16L46 28V48H18V28Z" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/>
+                    <path d="M26 48V36H38V48" fill="none" stroke="${stroke}" stroke-width="4" stroke-linejoin="round"/>
+                </svg>`;
+        }
+
+        function canResize(item) {
+            return Boolean(item) && item.type !== 'arrow';
+        }
+
+        function normalizeItemToArtboard(item) {
+            ensureDefaults(item);
+            const artboardWidth = artboard.clientWidth || 1200;
+            const artboardHeight = artboard.clientHeight || 900;
+            item.width = Math.min(item.width, artboardWidth);
+            item.height = Math.min(item.height, artboardHeight);
+            item.x = clamp(item.x, 0, Math.max(0, artboardWidth - item.width));
+            item.y = clamp(item.y, 0, Math.max(0, artboardHeight - item.height));
+        }
+
+        function selectOnly(id) {
+            selectedIds = id ? [id] : [];
+        }
+
+        function toggleSelection(id) {
+            if (selectedIds.includes(id)) {
+                selectedIds = selectedIds.filter((entry) => entry !== id);
+                return;
+            }
+            selectedIds = [...selectedIds, id];
+        }
+
+        function ensureSelected(id) {
+            if (!selectedIds.includes(id)) selectedIds = [id];
+        }
+
+        function moveItem(itemId, direction) {
+            const index = items.findIndex((item) => item.id === itemId);
+            if (index === -1) return;
+            const targetIndex = direction === 'up' ? index - 1 : index + 1;
+            if (targetIndex < 0 || targetIndex >= items.length) return;
+            const [item] = items.splice(index, 1);
+            items.splice(targetIndex, 0, item);
+            render();
+        }
+
+        function isEditableTarget(target) {
+            if (!(target instanceof HTMLElement)) return false;
+            return Boolean(target.closest('input, textarea, select, button, [contenteditable="true"]'));
+        }
+
+        function duplicateSelectedItems() {
+            const source = copiedItems.length > 0 ? copiedItems : selectedItems();
+            if (source.length === 0) return;
+            const duplicates = source.map((item, index) => {
+                const clone = ensureDefaults(JSON.parse(JSON.stringify(item)));
+                clone.id = nextId();
+                clone.x = clamp((clone.x || 0) + 24 + index * 8, 0, Math.max(0, artboard.clientWidth - clone.width));
+                clone.y = clamp((clone.y || 0) + 24 + index * 8, 0, Math.max(0, artboard.clientHeight - clone.height));
+                return clone;
+            });
+            items.push(...duplicates);
+            selectedIds = duplicates.map((item) => item.id);
+            render();
+        }
+
+        function handleGlobalShortcuts(event) {
+            if (isEditableTarget(document.activeElement)) return;
+            if (!(event.ctrlKey || event.metaKey)) return;
+            const key = event.key.toLowerCase();
+            if (key === 'c') {
+                const selection = selectedItems();
+                if (selection.length === 0) return;
+                copiedItems = selection.map((item) => JSON.parse(JSON.stringify(item)));
+                event.preventDefault();
+                setExportStatus(`Copied ${copiedItems.length} element${copiedItems.length === 1 ? '' : 's'} from the artboard.`);
+                return;
+            }
+            if (key === 'v') {
+                if (copiedItems.length === 0) return;
+                event.preventDefault();
+                duplicateSelectedItems();
+                setExportStatus(`Pasted ${selectedIds.length} duplicated element${selectedIds.length === 1 ? '' : 's'}.`);
+            }
+        }
+
+        function handleRowSelection(event, itemId, rowIndex) {
+            event.stopPropagation();
+            const selectionId = createRowSelectionId(itemId, rowIndex);
+            if (event.shiftKey || event.ctrlKey || event.metaKey) {
+                toggleSelection(selectionId);
+            } else {
+                selectOnly(selectionId);
+            }
+            syncControls();
+            render();
+        }
+
+        function alignSelection(mode) {
+            const group = selectedItems();
+            if (group.length < 2) return;
+
+            if (mode === 'left') {
+                const min = Math.min(...group.map((item) => item.x));
+                group.forEach((item) => { item.x = min; });
+            } else if (mode === 'hcenter') {
+                const center = (Math.min(...group.map((item) => item.x)) + Math.max(...group.map((item) => item.x + item.width))) / 2;
+                group.forEach((item) => { item.x = Math.round(center - item.width / 2); });
+            } else if (mode === 'right') {
+                const max = Math.max(...group.map((item) => item.x + item.width));
+                group.forEach((item) => { item.x = max - item.width; });
+            } else if (mode === 'top') {
+                const min = Math.min(...group.map((item) => item.y));
+                group.forEach((item) => { item.y = min; });
+            } else if (mode === 'vmiddle') {
+                const center = (Math.min(...group.map((item) => item.y)) + Math.max(...group.map((item) => item.y + item.height))) / 2;
+                group.forEach((item) => { item.y = Math.round(center - item.height / 2); });
+            } else if (mode === 'bottom') {
+                const max = Math.max(...group.map((item) => item.y + item.height));
+                group.forEach((item) => { item.y = max - item.height; });
+            } else if (mode === 'distribute-h') {
+                const sorted = [...group].sort((a, b) => a.x - b.x);
+                if (sorted.length < 3) return;
+                const min = sorted[0].x;
+                const max = sorted[sorted.length - 1].x + sorted[sorted.length - 1].width;
+                const total = sorted.reduce((sum, item) => sum + item.width, 0);
+                const gap = (max - min - total) / (sorted.length - 1);
+                let cursor = min;
+                sorted.forEach((item) => {
+                    item.x = Math.round(cursor);
+                    cursor += item.width + gap;
+                });
+            } else if (mode === 'distribute-v') {
+                const sorted = [...group].sort((a, b) => a.y - b.y);
+                if (sorted.length < 3) return;
+                const min = sorted[0].y;
+                const max = sorted[sorted.length - 1].y + sorted[sorted.length - 1].height;
+                const total = sorted.reduce((sum, item) => sum + item.height, 0);
+                const gap = (max - min - total) / (sorted.length - 1);
+                let cursor = min;
+                sorted.forEach((item) => {
+                    item.y = Math.round(cursor);
+                    cursor += item.height + gap;
+                });
+            }
+
+            group.forEach((item) => {
+                item.x = clamp(item.x, 0, Math.max(0, artboard.clientWidth - item.width));
+                item.y = clamp(item.y, 0, Math.max(0, artboard.clientHeight - item.height));
+            });
+            render();
+        }
+
+        function createInner(type, item) {
+            if (type === 'table') {
+                return `
+                    <div class="ui-table" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity};">
+                        <div class="header" style="left:3.8%; right:3.8%; top:6.4%; height:9.6%; border-radius:999px;"></div>
+                        <div class="row" style="left:3.8%; right:3.8%; top:22.4%; height:13.6%;"></div>
+                        <div class="row" style="left:3.8%; right:3.8%; top:39.2%; height:13.6%;"></div>
+                        <div class="row" style="left:3.8%; right:3.8%; top:56%; height:13.6%; background:#eff8f3; border-color:#b7d5c4;"></div>
+                        <div class="row" style="left:3.8%; right:3.8%; top:72.8%; height:13.6%;"></div>
+                    </div>`;
+            }
+            if (type === 'table-stack') {
+                const rows = getTableStackRows(item);
+                return `
+                    <div class="ui-table" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity};">
+                        <div class="header" style="left:4.2%; right:4.2%; top:22px; height:26px; border-radius:999px; background:${item.foregroundColor === '#FFFFFF' ? 'rgba(255,255,255,0.22)' : '#eef2f0'};"></div>
+                        ${rows.map((row) => `<div class="row" style="left:4.2%; right:4.2%; top:${row.top}px; height:34px; background:${row.active ? '#eff8f3' : '#fbfcfb'}; border-color:${row.active ? '#b7d5c4' : '#e2e7e4'};"></div>`).join('')}
+                    </div>`;
+            }
+            if (type === 'table-stack-rows') {
+                const rows = getRowStackRows(item);
+                return `
+                    <div class="ui-row-stack" style="opacity:${item.opacity};">
+                        ${rows.map((row, index) => `<div class="ui-row-stack__row${row.selected ? ' is-selected' : ''}" data-row-select="${index}" style="top:${row.top}px; height:${row.height}px; background:${row.color}; border-radius:${item.radius}px;"></div>`).join('')}
+                    </div>`;
+            }
+            if (type === 'card') {
+                return `
+                    <div class="ui-card" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity}; position:relative;">
+                        <span class="mini-line" style="left:10.5%; top:13.8%; width:42.4%; height:9.2%; background:#bcc5c1;"></span>
+                        <span class="mini-line" style="left:10.5%; top:33.8%; width:65.9%; height:29.2%; background:#eef2f0; border-radius:16px;"></span>
+                        <span class="mini-pill" style="left:10.5%; bottom:13.8%; width:49.4%; height:10.8%; background:#e7f5ef;"></span>
+                    </div>`;
+            }
+            if (type === 'filter') {
+                return `
+                    <div class="ui-filter" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity}; position:relative;">
+                        <span class="mini-line" style="left:16px; top:16px; width:64px; height:10px; background:#bcc5c1;"></span>
+                        <span class="mini-pill" style="left:16px; top:42px; width:132px; height:18px; background:#e7f5ef;"></span>
+                        <span class="mini-pill" style="left:16px; top:70px; width:124px; height:18px; background:#ffffff; border:1px solid #d5ddda;"></span>
+                    </div>`;
+            }
+            if (type === 'button') {
+                return `<div class="ui-button" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity};"></div>`;
+            }
+            if (type === 'badge') {
+                return `<div class="ui-badge" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity};"></div>`;
+            }
+            if (type === 'circle') {
+                return `<div class="ui-circle" style="background:${item.color}; opacity:${item.opacity};"></div>`;
+            }
+            if (type === 'square') {
+                return `<div class="ui-square" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity};"></div>`;
+            }
+            if (type === 'text') {
+                return `<div class="ui-text" style="color:${item.foregroundColor || '#1F2A24'}; opacity:${item.opacity}; font-size:${item.fontSize || 28}px;">${item.text || 'Text widget'}</div>`;
+            }
+            if (type === 'text-lines') {
+                const groups = getPlaceholderGroups(item, 4);
+                const widths = [100, 92, 78, 88];
+                return `
+                    <div style="position:relative;width:100%;height:100%;opacity:${item.opacity};">
+                        ${groups.map((group) => widths.map((lineWidth, index) => `<div style="position:absolute;left:0;top:${group.top + index * (group.lineHeight + group.lineGap)}px;width:${lineWidth}%;height:${group.lineHeight}px;border-radius:999px;background:${item.foregroundColor || '#1F2A24'};"></div>`).join('')).join('')}
+                    </div>`;
+            }
+            if (type === 'text-squiggles') {
+                const groups = getPlaceholderGroups(item, 3);
+                const svgHeight = Math.max(24, item.height);
+                const width = Math.max(40, item.width);
+                const paths = groups.map((group, groupIndex) => {
+                    const baselines = [0, 1, 2].map((lineIndex) => group.top + 6 + lineIndex * (group.lineHeight + group.lineGap + 2));
+                    const widths = [1, 0.9, 0.78];
+                    return baselines.map((baseline, lineIndex) => {
+                        const lineWidth = Math.max(28, Math.round(width * widths[lineIndex]));
+                        return `<path d="${buildSquigglePath(lineWidth, baseline, 3.5, 10)}" fill="none" stroke="${item.foregroundColor || '#1F2A24'}" stroke-width="3" stroke-linecap="round" opacity="${0.94 - groupIndex * 0.04}"/>`;
+                    }).join('');
+                }).join('');
+                return `<svg viewBox="0 0 ${width} ${svgHeight}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:${item.opacity}; overflow:visible;">${paths}</svg>`;
+            }
+            if (type === 'icon') {
+                return `<div class="ui-icon-widget" style="background:${item.color}; border-radius:${item.radius}px; opacity:${item.opacity};">${iconMarkup(item)}</div>`;
+            }
+            return `
+                <svg class="ui-arrow" viewBox="0 0 ${item.width} ${item.height}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="opacity:${item.opacity};">
+                    <path d="M8 ${item.height / 2} H ${item.width - 26}" stroke="${item.color}" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M${item.width - 42} 6 L${item.width - 12} ${item.height / 2} L${item.width - 42} ${item.height - 6}" stroke="${item.color}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>`;
+        }
+
+        function render() {
+            items.forEach(normalizeItemToArtboard);
+            artboard.innerHTML = '';
+            layers.innerHTML = '';
+
+            items.forEach((item, index) => {
+                const el = document.createElement('div');
+                el.className = `canvas-item${selectedIds.includes(item.id) ? ' selected' : ''}`;
+                el.dataset.id = item.id;
+                el.style.left = `${item.x}px`;
+                el.style.top = `${item.y}px`;
+                el.style.width = `${item.width}px`;
+                el.style.height = `${item.height}px`;
+                el.innerHTML = createInner(item.type, item);
+                el.addEventListener('pointerdown', startDrag);
+                el.querySelectorAll('[data-row-select]').forEach((rowNode) => {
+                    rowNode.addEventListener('pointerdown', (event) => event.stopPropagation());
+                    rowNode.addEventListener('click', (event) => handleRowSelection(event, item.id, Number(rowNode.dataset.rowSelect)));
+                });
+                el.addEventListener('click', (event) => {
+                    if (event.shiftKey || event.ctrlKey || event.metaKey) {
+                        toggleSelection(item.id);
+                    } else {
+                        selectOnly(item.id);
+                    }
+                    syncControls();
+                    render();
+                });
+                if (selectedIds.length === 1 && selectedIds.includes(item.id) && canResize(item)) {
+                    const handle = document.createElement('div');
+                    handle.className = 'resize-handle';
+                    handle.title = 'Drag to resize';
+                    handle.addEventListener('pointerdown', (event) => startResize(event, item.id));
+                    el.appendChild(handle);
+                }
+                artboard.appendChild(el);
+
+                const layerRow = document.createElement('div');
+                layerRow.className = 'layer-row';
+
+                const layer = document.createElement('button');
+                layer.type = 'button';
+                layer.className = `layer-btn${selectedIds.length === 1 && selectedIds.includes(item.id) ? ' active' : selectedIds.includes(item.id) ? ' multi-active' : ''}`;
+                const label = item.type === 'icon' ? `icon:${item.iconName}` : item.type === 'text' ? `text:${(item.text || '').slice(0, 18) || 'widget'}` : item.type;
+                layer.textContent = `${label} · ${item.width}×${item.height}`;
+                layer.addEventListener('click', (event) => {
+                    if (event.shiftKey || event.ctrlKey || event.metaKey) {
+                        toggleSelection(item.id);
+                    } else {
+                        selectOnly(item.id);
+                    }
+                    syncControls();
+                    render();
+                });
+
+                const layerSort = document.createElement('div');
+                layerSort.className = 'layer-sort';
+
+                const moveUpButton = document.createElement('button');
+                moveUpButton.type = 'button';
+                moveUpButton.textContent = '↑';
+                moveUpButton.disabled = index === 0;
+                moveUpButton.title = 'Move layer up';
+                moveUpButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    moveItem(item.id, 'up');
+                });
+
+                const moveDownButton = document.createElement('button');
+                moveDownButton.type = 'button';
+                moveDownButton.textContent = '↓';
+                moveDownButton.disabled = index === items.length - 1;
+                moveDownButton.title = 'Move layer down';
+                moveDownButton.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    moveItem(item.id, 'down');
+                });
+
+                layerSort.appendChild(moveUpButton);
+                layerSort.appendChild(moveDownButton);
+                layerRow.appendChild(layer);
+                layerRow.appendChild(layerSort);
+                layers.appendChild(layerRow);
+            });
+
+            if (marqueeState) {
+                const box = getRectFromPoints(marqueeState.startX, marqueeState.startY, marqueeState.currentX, marqueeState.currentY);
+                const marquee = document.createElement('div');
+                marquee.className = 'selection-box';
+                marquee.style.left = `${box.left}px`;
+                marquee.style.top = `${box.top}px`;
+                marquee.style.width = `${box.width}px`;
+                marquee.style.height = `${box.height}px`;
+                artboard.appendChild(marquee);
+            }
+
+            syncControls();
+            renderExport();
+            renderSwatches();
+        }
+
+        function renderExport() {
+            exportBox.textContent = JSON.stringify(items, null, 2);
+        }
+
+        function setExportStatus(message) {
+            exportStatus.textContent = message || '';
+        }
+
+        function getExportMaxSide() {
+            const parsed = Number(exportMaxSideInput.value);
+            const nextValue = Number.isFinite(parsed) ? clamp(Math.round(parsed), 256, 4096) : 1600;
+            exportMaxSideInput.value = String(nextValue);
+            return nextValue;
+        }
+
+        function getExportDimensions(maxSide) {
+            const sourceWidth = Math.max(1, artboard.clientWidth);
+            const sourceHeight = Math.max(1, artboard.clientHeight);
+            const scale = maxSide / Math.max(sourceWidth, sourceHeight);
+            return {
+                sourceWidth,
+                sourceHeight,
+                outputWidth: Math.max(1, Math.round(sourceWidth * scale)),
+                outputHeight: Math.max(1, Math.round(sourceHeight * scale)),
+            };
+        }
+
+        function getExportArtboardMarkup(sourceWidth, sourceHeight) {
+            const clone = artboard.cloneNode(true);
+            clone.querySelectorAll('.resize-handle, .selection-box').forEach((element) => element.remove());
+            clone.querySelectorAll('.canvas-item').forEach((element) => {
+                element.classList.remove('selected', 'dragging');
+            });
+            clone.style.width = `${sourceWidth}px`;
+            clone.style.height = `${sourceHeight}px`;
+            clone.style.minHeight = '0';
+            clone.style.aspectRatio = 'auto';
+            clone.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+            return clone.outerHTML;
+        }
+
+        function createExportArtboardNode(sourceWidth, sourceHeight) {
+            const clone = artboard.cloneNode(true);
+            clone.querySelectorAll('.resize-handle, .selection-box').forEach((element) => element.remove());
+            clone.querySelectorAll('.canvas-item').forEach((element) => {
+                element.classList.remove('selected', 'dragging');
+            });
+            clone.style.width = `${sourceWidth}px`;
+            clone.style.height = `${sourceHeight}px`;
+            clone.style.minHeight = '0';
+            clone.style.aspectRatio = 'auto';
+            return clone;
+        }
+
+        async function buildSvgMarkup(maxSide) {
+            const dimensions = getExportDimensions(maxSide);
+            const artboardMarkup = getExportArtboardMarkup(dimensions.sourceWidth, dimensions.sourceHeight);
+            const fontCss = await getExportFontCss();
+            const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${dimensions.outputWidth}" height="${dimensions.outputHeight}" viewBox="0 0 ${dimensions.sourceWidth} ${dimensions.sourceHeight}">
+    <defs>
+        <style><![CDATA[${fontCss}
+${EXPORT_SVG_STYLES}]]></style>
+    </defs>
+    <foreignObject x="0" y="0" width="${dimensions.sourceWidth}" height="${dimensions.sourceHeight}">${artboardMarkup}</foreignObject>
+</svg>`;
+
+            return { ...dimensions, svg };
+        }
+
+        async function createSvgBlob(maxSide) {
+            const payload = await buildSvgMarkup(maxSide);
+            return {
+                ...payload,
+                blob: new Blob([payload.svg], { type: 'image/svg+xml;charset=utf-8' }),
+            };
+        }
+
+        function triggerDownload(url, filename) {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function revokeLater(url) {
+            window.setTimeout(() => URL.revokeObjectURL(url), 30000);
+        }
+
+        async function createPngBlob(maxSide) {
+            const dimensions = getExportDimensions(maxSide);
+            if (typeof html2canvas !== 'function') {
+                throw new Error('PNG export renderer failed to load. Refresh the page and try again.');
+            }
+
+            if (document.fonts?.ready) {
+                await document.fonts.ready;
+            }
+
+            const clone = createExportArtboardNode(dimensions.sourceWidth, dimensions.sourceHeight);
+            const sandbox = document.createElement('div');
+            sandbox.style.position = 'fixed';
+            sandbox.style.left = '-20000px';
+            sandbox.style.top = '0';
+            sandbox.style.width = `${dimensions.sourceWidth}px`;
+            sandbox.style.height = `${dimensions.sourceHeight}px`;
+            sandbox.style.pointerEvents = 'none';
+            sandbox.style.opacity = '1';
+            sandbox.appendChild(clone);
+            document.body.appendChild(sandbox);
+
+            try {
+                const scale = dimensions.outputWidth / dimensions.sourceWidth;
+                const canvas = await html2canvas(clone, {
+                    backgroundColor: null,
+                    scale,
+                    useCORS: true,
+                    logging: false,
+                });
+
+                const blob = await new Promise((resolve, reject) => {
+                    canvas.toBlob((nextBlob) => {
+                        if (nextBlob) {
+                            resolve(nextBlob);
+                            return;
+                        }
+                        reject(new Error('PNG export failed.'));
+                    }, 'image/png');
+                });
+
+                return { ...dimensions, blob };
+            } finally {
+                document.body.removeChild(sandbox);
+            }
+        }
+
+        function renderSwatches() {
+            const surfaceTargets = getSelectedSurfaceTargets();
+            const group = selectedItems();
+            const selectedSurfaceColor = surfaceTargets.length > 0 && surfaceTargets.every((target) => normalizeColorToken(target.color) === normalizeColorToken(surfaceTargets[0].color))
+                ? normalizeColorToken(surfaceTargets[0].color)
+                : '#ffffff';
+            swatches.innerHTML = '';
+            palette.forEach((color) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                const allMatch = surfaceTargets.length > 0 && surfaceTargets.every((target) => normalizeColorToken(target.color) === normalizeColorToken(color));
+                btn.className = `swatch${allMatch ? ' selected' : ''}`;
+                btn.style.background = color;
+                btn.setAttribute('aria-label', `Use color ${color}`);
+                btn.addEventListener('click', () => {
+                    if (surfaceTargets.length === 0) return;
+                    surfaceTargets.forEach((target) => {
+                        target.setColor(color);
+                    });
+                    render();
+                });
+                swatches.appendChild(btn);
+            });
+
+            surfaceColorPicker.value = selectedSurfaceColor;
+            surfaceColorPicker.disabled = surfaceTargets.length === 0;
+            surfaceColorValue.textContent = surfaceTargets.length === 0
+                ? 'Select an element to set a custom surface color'
+                : `Custom surface color ${selectedSurfaceColor.toUpperCase()}`;
+
+            foregroundSwatches.innerHTML = '';
+            foregroundPalette.forEach((color) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                const eligibleGroup = group.filter((item) => item.type === 'text' || item.type === 'icon' || item.type === 'table-stack' || item.type === 'text-lines' || item.type === 'text-squiggles');
+                const allMatch = eligibleGroup.length > 0 && eligibleGroup.every((item) => (item.foregroundColor || '#1F2A24') === color);
+                btn.className = `swatch${allMatch ? ' selected' : ''}${color === '#FFFFFF' ? ' swatch--light' : ''}`;
+                btn.style.background = color;
+                btn.setAttribute('aria-label', `Use foreground color ${color}`);
+                btn.addEventListener('click', () => {
+                    if (eligibleGroup.length === 0) return;
+                    eligibleGroup.forEach((item) => {
+                        item.foregroundColor = color;
+                    });
+                    render();
+                });
+                foregroundSwatches.appendChild(btn);
+            });
+        }
+
+        function syncControls() {
+            const item = selectedItem();
+            const single = selectedIds.length === 1;
+            const disabled = !single || !item;
+            Object.values(propInputs).forEach((input) => {
+                input.disabled = disabled;
+            });
+            if (!single || !item) {
+                propText.disabled = true;
+                const rowTargets = getSelectedRowTargets();
+                propText.value = rowTargets.length === 1 && selectedIds.length === 1
+                    ? '1 row selected'
+                    : selectedIds.length > 1 ? `${selectedIds.length} items selected` : '';
+                return;
+            }
+            propInputs.x.value = item.x;
+            propInputs.y.value = item.y;
+            propInputs.width.value = item.width;
+            propInputs.height.value = item.height;
+            propInputs.radius.value = item.radius;
+            propInputs.opacity.value = item.opacity;
+            propInputs.fontSize.value = item.fontSize || '';
+            propText.disabled = item.type !== 'text';
+            propText.value = item.type === 'text' ? (item.text || '') : '';
+        }
+
+        function startDrag(event) {
+            event.stopPropagation();
+            if (event.target.classList?.contains('resize-handle')) return;
+            const id = event.currentTarget.dataset.id;
+            const item = items.find((entry) => entry.id === id);
+            if (!item) return;
+            if (event.shiftKey || event.ctrlKey || event.metaKey) {
+                toggleSelection(id);
+            } else {
+                ensureSelected(id);
+            }
+            const group = selectedItems();
+            dragState = {
+                ids: group.map((entry) => entry.id),
+                startX: event.clientX,
+                startY: event.clientY,
+                origins: group.map((entry) => ({ id: entry.id, x: entry.x, y: entry.y }))
+            };
+            event.currentTarget.classList.add('dragging');
+            event.currentTarget.setPointerCapture(event.pointerId);
+            window.addEventListener('pointermove', onDrag);
+            window.addEventListener('pointerup', endDrag);
+            syncControls();
+            render();
+        }
+
+        function startResize(event, id) {
+            event.stopPropagation();
+            const item = items.find((entry) => entry.id === id);
+            if (!item) return;
+            selectOnly(id);
+            resizeState = {
+                id,
+                startX: event.clientX,
+                startY: event.clientY,
+                width: item.width,
+                height: item.height,
+            };
+            event.currentTarget.setPointerCapture(event.pointerId);
+            window.addEventListener('pointermove', onResize);
+            window.addEventListener('pointerup', endResize);
+            syncControls();
+            render();
+        }
+
+        function onResize(event) {
+            if (!resizeState) return;
+            const item = items.find((entry) => entry.id === resizeState.id);
+            if (!item) return;
+            const dx = event.clientX - resizeState.startX;
+            const dy = event.clientY - resizeState.startY;
+            const nextWidth = Math.max(24, Math.round(resizeState.width + dx));
+            const nextHeight = Math.max(20, Math.round(resizeState.height + dy));
+
+            if (item.type === 'circle') {
+                const size = Math.max(24, Math.round(Math.max(nextWidth, nextHeight)));
+                item.width = size;
+                item.height = size;
+            } else {
+                item.width = nextWidth;
+                item.height = nextHeight;
+            }
+
+            if (item.x + item.width > artboard.clientWidth) {
+                item.width = Math.max(24, artboard.clientWidth - item.x);
+            }
+            if (item.y + item.height > artboard.clientHeight) {
+                item.height = Math.max(20, artboard.clientHeight - item.y);
+            }
+            syncControls();
+            render();
+        }
+
+        function endResize() {
+            resizeState = null;
+            window.removeEventListener('pointermove', onResize);
+            window.removeEventListener('pointerup', endResize);
+            snapPlaceholdersToRowStacks();
+            render();
+        }
+
+        function onDrag(event) {
+            if (!dragState) return;
+            const dx = event.clientX - dragState.startX;
+            const dy = event.clientY - dragState.startY;
+            dragState.origins.forEach((origin) => {
+                const item = items.find((entry) => entry.id === origin.id);
+                if (!item) return;
+                item.x = clamp(Math.round(origin.x + dx), 0, Math.max(0, artboard.clientWidth - item.width));
+                item.y = clamp(Math.round(origin.y + dy), 0, Math.max(0, artboard.clientHeight - item.height));
+            });
+            syncControls();
+            render();
+        }
+
+        function endDrag() {
+            dragState = null;
+            window.removeEventListener('pointermove', onDrag);
+            window.removeEventListener('pointerup', endDrag);
+            snapPlaceholdersToRowStacks();
+            render();
+        }
+
+        function updateMarqueeSelection() {
+            if (!marqueeState) return;
+            const box = getRectFromPoints(marqueeState.startX, marqueeState.startY, marqueeState.currentX, marqueeState.currentY);
+            if (box.width < 4 && box.height < 4) {
+                return;
+            }
+            marqueeState.hasDragged = true;
+            const matchedIds = items
+                .filter((item) => rectsIntersect(box, {
+                    left: item.x,
+                    top: item.y,
+                    right: item.x + item.width,
+                    bottom: item.y + item.height,
+                }))
+                .map((item) => item.id);
+            selectedIds = marqueeState.additive
+                ? [...new Set([...marqueeState.baseSelection, ...matchedIds])]
+                : matchedIds;
+        }
+
+        function startMarqueeSelection(event) {
+            if (event.target !== artboard) return;
+            const point = getArtboardPoint(event.clientX, event.clientY);
+            marqueeState = {
+                pointerId: event.pointerId,
+                startX: point.x,
+                startY: point.y,
+                currentX: point.x,
+                currentY: point.y,
+                additive: event.shiftKey || event.ctrlKey || event.metaKey,
+                baseSelection: event.shiftKey || event.ctrlKey || event.metaKey ? [...selectedIds] : [],
+                hasDragged: false,
+            };
+            artboard.setPointerCapture(event.pointerId);
+            window.addEventListener('pointermove', onMarqueeMove);
+            window.addEventListener('pointerup', endMarqueeSelection);
+            render();
+        }
+
+        function onMarqueeMove(event) {
+            if (!marqueeState) return;
+            const point = getArtboardPoint(event.clientX, event.clientY);
+            marqueeState.currentX = point.x;
+            marqueeState.currentY = point.y;
+            updateMarqueeSelection();
+            render();
+        }
+
+        function endMarqueeSelection() {
+            if (!marqueeState) return;
+            if (!marqueeState.hasDragged && !marqueeState.additive) {
+                selectedIds = [];
+            }
+            marqueeState = null;
+            window.removeEventListener('pointermove', onMarqueeMove);
+            window.removeEventListener('pointerup', endMarqueeSelection);
+            render();
+        }
+
+        function addItem(type) {
+            const preset = presets[type];
+            if (!preset) return;
+            const item = ensureDefaults({ id: nextId(), ...preset, x: preset.x + items.length * 8, y: preset.y + items.length * 8 });
+            normalizeItemToArtboard(item);
+            items.push(item);
+            selectOnly(item.id);
+            render();
+        }
+
+        addButtons.forEach((button) => {
+            button.addEventListener('click', () => addItem(button.dataset.add));
+        });
+
+        alignButtons.forEach((button) => {
+            button.addEventListener('click', () => alignSelection(button.dataset.align));
+        });
+
+        Object.entries(propInputs).forEach(([key, input]) => {
+            input.addEventListener('input', () => {
+                const item = selectedItem();
+                if (!item) return;
+                const value = Number(input.value);
+                if (Number.isNaN(value)) return;
+                item[key] = key === 'opacity' ? clamp(value, 0.1, 1) : Math.max(0, Math.round(value));
+                if (key === 'width') item.width = Math.max(24, item.width);
+                if (key === 'height') item.height = Math.max(20, item.height);
+                if (key === 'fontSize') item.fontSize = Math.max(10, item.fontSize || value);
+                render();
+            });
+        });
+
+        propText.addEventListener('input', () => {
+            const item = selectedItem();
+            if (!item || item.type !== 'text') return;
+            item.text = propText.value;
+            render();
+        });
+
+        surfaceColorPicker.addEventListener('input', () => {
+            const surfaceTargets = getSelectedSurfaceTargets();
+            if (surfaceTargets.length === 0) return;
+            const color = normalizeColorToken(surfaceColorPicker.value);
+            surfaceTargets.forEach((target) => {
+                target.setColor(color);
+            });
+            render();
+        });
+
+        document.getElementById('delete-item').addEventListener('click', () => {
+            if (selectedIds.length === 0) return;
+            items = items.filter((item) => !selectedIds.includes(item.id));
+            selectedIds = items[0]?.id ? [items[0].id] : [];
+            render();
+        });
+
+        addButtons.forEach((button) => {
+            const addType = button.dataset.add;
+            button.classList.add('tool-btn--visual');
+            if (addType && addType.startsWith('icon-')) {
+                button.classList.add('tool-btn--icon');
+            }
+            button.innerHTML = getAddButtonMarkup(addType);
+            button.title = addButtonLabels[addType] || addType;
+            button.setAttribute('aria-label', addButtonLabels[addType] || addType);
+        });
+
+        document.addEventListener('keydown', handleGlobalShortcuts);
+
+        document.getElementById('reset-layout').addEventListener('click', () => {
+            items = JSON.parse(JSON.stringify(starterLayout)).map(ensureDefaults);
+            selectedIds = [items[0].id];
+            render();
+        });
+
+        document.getElementById('copy-layout').addEventListener('click', async () => {
+            const text = JSON.stringify(items, null, 2);
+            try {
+                await navigator.clipboard.writeText(text);
+                setExportStatus('JSON layout copied. Use this to restore or share the editable composition.');
+            } catch {}
+            exportBox.textContent = text;
+        });
+
+        document.getElementById('open-svg-tab').addEventListener('click', async () => {
+            try {
+                const maxSide = getExportMaxSide();
+                const payload = await createSvgBlob(maxSide);
+                const url = URL.createObjectURL(payload.blob);
+                const preview = window.open(url, '_blank', 'noopener');
+                if (!preview) {
+                    setExportStatus('SVG tab was blocked. Allow pop-ups or use Download SVG.');
+                    URL.revokeObjectURL(url);
+                    return;
+                }
+                setExportStatus(`Opened SVG at ${payload.outputWidth}×${payload.outputHeight}px.`);
+                revokeLater(url);
+            } catch (error) {
+                setExportStatus(error.message || 'SVG export failed.');
+            }
+        });
+
+        document.getElementById('download-svg').addEventListener('click', async () => {
+            try {
+                const maxSide = getExportMaxSide();
+                const payload = await createSvgBlob(maxSide);
+                const url = URL.createObjectURL(payload.blob);
+                triggerDownload(url, `catalogiq-layout-${payload.outputWidth}x${payload.outputHeight}.svg`);
+                setExportStatus(`Downloaded SVG at ${payload.outputWidth}×${payload.outputHeight}px.`);
+                revokeLater(url);
+            } catch (error) {
+                setExportStatus(error.message || 'SVG export failed.');
+            }
+        });
+
+        document.getElementById('open-png-tab').addEventListener('click', async () => {
+            const preview = window.open('', '_blank', 'noopener');
+            try {
+                const maxSide = getExportMaxSide();
+                const payload = await createPngBlob(maxSide);
+                const url = URL.createObjectURL(payload.blob);
+                if (preview) {
+                    preview.location.href = url;
+                } else {
+                    window.open(url, '_blank', 'noopener');
+                }
+                setExportStatus(`Opened PNG at ${payload.outputWidth}×${payload.outputHeight}px.`);
+                revokeLater(url);
+            } catch (error) {
+                if (preview) preview.close();
+                setExportStatus(error.message || 'PNG export failed.');
+            }
+        });
+
+        document.getElementById('download-png').addEventListener('click', async () => {
+            try {
+                const maxSide = getExportMaxSide();
+                const payload = await createPngBlob(maxSide);
+                const url = URL.createObjectURL(payload.blob);
+                triggerDownload(url, `catalogiq-layout-${payload.outputWidth}x${payload.outputHeight}.png`);
+                setExportStatus(`Downloaded PNG at ${payload.outputWidth}×${payload.outputHeight}px.`);
+                revokeLater(url);
+            } catch (error) {
+                setExportStatus(error.message || 'PNG export failed.');
+            }
+        });
+
+        artboard.addEventListener('pointerdown', startMarqueeSelection);
+
+        render();
+    </script>
+</body>
+</html>
