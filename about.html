@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | CommerceDash</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .about-hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+        .about-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--text-primary) 0%, var(--accent-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+        .about-hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+        .about-content {
+            padding: 4rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .about-section {
+            margin-bottom: 4rem;
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .about-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .about-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        .about-text p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .about-image-placeholder {
+            flex: 1;
+            background: var(--bg-tertiary);
+            border-radius: 1rem;
+            border: 1px dashed var(--border-color);
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .about-image-placeholder:hover {
+            transform: scale(1.02);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .about-section, .about-section:nth-child(even) {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="/" class="brand-logo">
+                <span class="brand-name">CommerceDash</span>
+            </a>
+            <nav class="nav-links">
+                <a href="/catalogiq/" class="nav-link">catalogIQ</a>
+                <a href="/about.html" class="nav-link active">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <h1>Building the Future of Commerce Tools</h1>
+            <p>We empower Shopify merchants with professional-grade, specialized applications designed to eliminate manual data entry and scale operations gracefully.</p>
+        </section>
+
+        <section class="about-content">
+            <div class="about-section" id="mission-section">
+                <div class="about-text">
+                    <h2>Our Mission</h2>
+                    <p>[Placeholder: Detailed paragraph explaining the core mission to help merchants save time, reduce errors, and scale their product management seamlessly using tools like catalogIQ.]</p>
+                    <p>[Placeholder: Secondary paragraph talking about the importance of bulk operations, accuracy, and providing a safety net like 60-day undo.]</p>
+                </div>
+                <div class="about-image-placeholder">
+                    [Team / Mission Image Placeholder]
+                </div>
+            </div>
+
+            <div class="about-section" id="story-section">
+                <div class="about-text">
+                    <h2>Our Story</h2>
+                    <p>[Placeholder: The origin story of CommerceDash. How dealing with messy product catalogs led to the creation of focused, single-purpose apps instead of fully bloated ERPs.]</p>
+                    <p>[Placeholder: Growth milestones and the journey so far.]</p>
+                </div>
+                <div class="about-image-placeholder">
+                    [Office / Setup Image Placeholder]
+                </div>
+            </div>
+
+            <div class="about-section" id="values-section">
+                <div class="about-text">
+                    <h2>Our Values</h2>
+                    <ul style="color: var(--text-secondary); line-height: 1.8; margin-left: 1.5rem;">
+                        <li><strong>Merchant First:</strong> [Placeholder text]</li>
+                        <li><strong>Radical Reliability:</strong> [Placeholder text]</li>
+                        <li><strong>Design with Intent:</strong> [Placeholder text]</li>
+                        <li><strong>Continuous Evolution:</strong> [Placeholder text]</li>
+                    </ul>
+                </div>
+                <div class="about-image-placeholder">
+                    [Values Graphic Placeholder]
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" style="padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border-color); margin-top: 2rem;">
+        <div style="margin-bottom: 2rem;">
+            <a href="/" style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem;">Home</a>
+            <a href="/catalogiq/" style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem;">catalogIQ</a>
+            <a href="/about.html" style="color: var(--text-secondary); text-decoration: none; margin: 0 1rem; font-weight: 500;">About Us</a>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">&copy; 2026 CommerceDash. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll reveal animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.about-section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
