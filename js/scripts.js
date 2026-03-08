@@ -1,7 +1,30 @@
 // Commerce Dash - Vanilla JS for UI interactions
 
 document.addEventListener('DOMContentLoaded', () => {
+    const HUBSPOT_PORTAL_ID = '245451684';
+    const WEBSITE_CHAT_SOURCE = 'marketing_website';
     const mobileBreakpoint = window.matchMedia('(max-width: 980px)');
+
+    const loadHubSpotChat = () => {
+        window.hsConversationsSettings = {
+            ...(window.hsConversationsSettings || {}),
+            loadImmediately: true,
+        };
+
+        document.documentElement.setAttribute('data-support-source', WEBSITE_CHAT_SOURCE);
+
+        const existingScript = document.querySelector(`script[data-hubspot-chat="${HUBSPOT_PORTAL_ID}"]`) || document.getElementById('hs-script-loader');
+        if (existingScript) return;
+
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = true;
+        script.defer = true;
+        script.id = 'hs-script-loader';
+        script.src = `https://js.hs-scripts.com/${HUBSPOT_PORTAL_ID}.js`;
+        script.setAttribute('data-hubspot-chat', HUBSPOT_PORTAL_ID);
+        document.body.appendChild(script);
+    };
 
     // Inject a menu toggle for each header so all pages share mobile navigation behavior.
     const headerContainers = document.querySelectorAll('.site-header .container');
@@ -85,6 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
             observer.observe(el);
         });
     }
+
+    loadHubSpotChat();
 
     console.log('Commerce Dash site loaded successfully.');
 });
